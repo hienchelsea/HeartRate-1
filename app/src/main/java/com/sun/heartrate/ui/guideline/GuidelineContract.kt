@@ -5,7 +5,7 @@ interface GuidelineContract {
 
     }
 
-    interface Presenter  {
+    interface Presenter {
 
     }
 }
