@@ -14,30 +14,30 @@ class HeartRepository(
     ) {
         heartLocalDataSource.insetHeart(heartModel, onDataLoadedCallback)
     }
-
+    
     override fun deleteHeart(
         heartModel: HeartModel,
         onDataLoadedCallback: OnDataLoadedCallback<Boolean>
     ) {
         heartLocalDataSource.deleteHeart(heartModel, onDataLoadedCallback)
     }
-
+    
     override fun getAllHearts(onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>) {
         heartLocalDataSource.getAllHearts(onDataLoadedCallback)
     }
-
+    
     override fun getHeartsByMonth(
         month: String,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
         heartLocalDataSource.getHeartsByMonth(month, onDataLoadedCallback)
     }
-
+    
     override fun getHeartsByStatus(
         image: Int,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
         heartLocalDataSource.getHeartsByStatus(image, onDataLoadedCallback)
     }
-
+    
 }

@@ -18,5 +18,6 @@ data class HeartModel(
         cursor.getString(cursor.getColumnIndex(HeartDatabase.COLUMN_HEART_RATE)).toInt(),
         cursor.getString(cursor.getColumnIndex(HeartDatabase.COLUMN_IMAGE)).toInt(),
         cursor.getString(cursor.getColumnIndex(HeartDatabase.COLUMN_MONTH)),
-        cursor.getString(cursor.getColumnIndex(HeartDatabase.COLUMN_TIME)).toLong())
+        cursor.getString(cursor.getColumnIndex(HeartDatabase.COLUMN_TIME)).toLong()
+    )
 }

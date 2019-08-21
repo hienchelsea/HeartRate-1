@@ -10,7 +10,7 @@ class ReadExternalHeartTask<T>(
     private val callback: OnDataLoadedCallback<T>
 ) : AsyncTask<T, Void, T?>() {
     private var exception: Exception? = null
-
+    
     override fun doInBackground(vararg p0: T): T? =
         try {
             p0.first()
@@ -18,7 +18,7 @@ class ReadExternalHeartTask<T>(
             this.exception = exception
             null
         }
-
+    
     override fun onPostExecute(result: T?) {
         if (result == null) {
             exception?.let { callback.onDataNotAvailable(it) }
@@ -26,5 +26,5 @@ class ReadExternalHeartTask<T>(
             callback.onDataLoaded(result)
         }
     }
-
+    
 }

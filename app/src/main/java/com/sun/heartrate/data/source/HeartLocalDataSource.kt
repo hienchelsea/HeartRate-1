@@ -13,30 +13,30 @@ class HeartLocalDataSource(
     ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
+    
     override fun deleteHeart(
         heartModel: HeartModel,
         onDataLoadedCallback: OnDataLoadedCallback<Boolean>
     ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
+    
     override fun getAllHearts(onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
+    
     override fun getHeartsByMonth(
         month: String,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
+    
     override fun getHeartsByStatus(
         image: Int,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
+    
 }

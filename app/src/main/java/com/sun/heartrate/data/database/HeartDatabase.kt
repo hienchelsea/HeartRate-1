@@ -10,15 +10,15 @@ import com.sun.heartrate.data.model.HeartModel
 class HeartDatabase(
     context: Context
 ) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-
+    
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE)
     }
-
+    
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(DROP_TABLE)
     }
-
+    
     fun insertHeart(heartModel: HeartModel): Boolean {
         val db = writableDatabase
         val values = createContentValues(heartModel)
@@ -26,19 +26,19 @@ class HeartDatabase(
         db.close()
         return result
     }
-
+    
     fun getAllHeart(): List<HeartModel> {
         val db = readableDatabase
         val cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null)
         return getHeart(cursor)
     }
-
+    
     fun getHeartByMonth(month: String): List<HeartModel> {
         val db = readableDatabase
         val cursor = db.query(TABLE_NAME, null, "$COLUMN_MONTH = ?", arrayOf(month), null, null, null)
         return getHeart(cursor)
     }
-
+    
     private fun getHeart(cursor: Cursor): List<HeartModel> {
         val hearts: MutableList<HeartModel> = mutableListOf()
         if (cursor != null && cursor.moveToFirst()) {
@@ -49,7 +49,7 @@ class HeartDatabase(
         close()
         return hearts
     }
-
+    
     fun deletelHeart(heartModel: HeartModel): Boolean {
         var result = false
         val db = writableDatabase
@@ -63,7 +63,7 @@ class HeartDatabase(
         db.close()
         return result
     }
-
+    
     private fun createContentValues(heartModel: HeartModel) = ContentValues().apply {
         put(COLUMN_TITLE, heartModel.title)
         put(COLUMN_HEART_RATE, heartModel.heartRate)
@@ -71,7 +71,7 @@ class HeartDatabase(
         put(COLUMN_MONTH, heartModel.monthYear)
         put(COLUMN_TIME, heartModel.time)
     }
-
+    
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "heart.db"
@@ -82,16 +82,19 @@ class HeartDatabase(
         const val COLUMN_IMAGE = "image"
         const val COLUMN_TIME = "time"
         const val COLUMN_MONTH = "month"
-
-        const val CREATE_TABLE: String = "CREATE TABLE IF NOT EXISTS $TABLE_NAME(" +
-            COLUMN_ID + " INTEGER PRIMARY KEY," +
-            COLUMN_TITLE + " TEXT, " +
-            COLUMN_HEART_RATE + " INTEGER, " +
-            COLUMN_IMAGE + " INTEGER, " +
-            COLUMN_MONTH + " TEXT, " +
-            COLUMN_TIME + " INTEGER)"
-
+        
+        const val CREATE_TABLE = """
+            CREATE TABLE IF NOT EXISTS $TABLE_NAME(
+                $COLUMN_ID INTEGER PRIMARY KEY,
+                $COLUMN_TITLE TEXT,
+                $COLUMN_HEART_RATE INTEGER,
+                $COLUMN_IMAGE INTEGER,
+                $COLUMN_MONTH TEXT,
+                $COLUMN_TIME INTEGER
+            );
+       """
+        
         const val DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
     }
-
+    
 }

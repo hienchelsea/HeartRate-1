@@ -8,19 +8,19 @@ interface HeartDataSource {
         heartModel: HeartModel,
         onDataLoadedCallback: OnDataLoadedCallback<Boolean>
     )
-
+    
     fun deleteHeart(
         heartModel: HeartModel,
         onDataLoadedCallback: OnDataLoadedCallback<Boolean>
     )
-
+    
     fun getAllHearts(onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>)
-
+    
     fun getHeartsByMonth(
         month: String,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     )
-
+    
     fun getHeartsByStatus(
         image: Int,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
