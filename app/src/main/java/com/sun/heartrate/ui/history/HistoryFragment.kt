@@ -19,4 +19,8 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_history, container, false)
+    
+    companion object {
+        fun newInstance() = HistoryFragment()
+    }
 }
