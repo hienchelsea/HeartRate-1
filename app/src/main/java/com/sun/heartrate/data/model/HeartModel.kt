@@ -1,6 +1,5 @@
 package com.sun.heartrate.data.model
 
-
 import android.database.Cursor
 import com.sun.heartrate.data.database.HeartDatabase
 

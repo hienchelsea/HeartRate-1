@@ -22,25 +22,60 @@ class HeartDatabase(
     fun insertHeart(heartModel: HeartModel): Boolean {
         val db = writableDatabase
         val values = createContentValues(heartModel)
-        val result = db.insert(TABLE_NAME, null, values) != -1L
+        val result = db.insert(
+            TABLE_NAME,
+            null,
+            values
+        ) != -1L
         db.close()
         return result
     }
     
     fun getAllHeart(): List<HeartModel> {
         val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null)
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
         return getHeart(cursor)
     }
     
     fun getHeartByMonth(month: String): List<HeartModel> {
         val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, null, "$COLUMN_MONTH = ?", arrayOf(month), null, null, null)
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COLUMN_MONTH = ?",
+            arrayOf(month),
+            null,
+            null,
+            null
+        )
+        return getHeart(cursor)
+    }
+    
+    fun getHeartByStatus(image: Int): List<HeartModel> {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COLUMN_IMAGE = ?",
+            arrayOf(image.toString()),
+            null,
+            null,
+            null
+        )
         return getHeart(cursor)
     }
     
     private fun getHeart(cursor: Cursor): List<HeartModel> {
-        val hearts: MutableList<HeartModel> = mutableListOf()
+        val hearts= mutableListOf<HeartModel>()
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 hearts.add(HeartModel(cursor))
@@ -51,15 +86,12 @@ class HeartDatabase(
     }
     
     fun deletelHeart(heartModel: HeartModel): Boolean {
-        var result = false
-        val db = writableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null)
-        if (cursor.moveToFirst()) {
-            db.delete(TABLE_NAME, "$COLUMN_ID = ?",
-                arrayOf(heartModel.id.toString()))
-            cursor.close()
-            result = true
-        }
+        val db = this.writableDatabase
+        val result = db.delete(
+            TABLE_NAME,
+            "$COLUMN_ID=?",
+            arrayOf(heartModel.id.toString())
+        ) != -1
         db.close()
         return result
     }

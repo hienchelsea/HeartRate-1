@@ -3,6 +3,9 @@ package com.sun.heartrate.data.source
 import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
+import com.sun.heartrate.data.source.asynctask.AllHeartAsyncTask
+import com.sun.heartrate.data.source.asynctask.MonthlyHeartAsyncTask
+import com.sun.heartrate.data.source.asynctask.StatusHeartAsyncTask
 
 class HeartLocalDataSource(
     private val heartDatabase: HeartDatabase
@@ -22,21 +25,32 @@ class HeartLocalDataSource(
     }
     
     override fun getAllHearts(onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        AllHeartAsyncTask(
+            heartDatabase,
+            onDataLoadedCallback
+        ).execute()
     }
     
     override fun getHeartsByMonth(
         month: String,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        MonthlyHeartAsyncTask(
+            month,
+            heartDatabase,
+            onDataLoadedCallback
+        ).execute()
     }
     
     override fun getHeartsByStatus(
         image: Int,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        StatusHeartAsyncTask(
+            image.toString(),
+            heartDatabase,
+            onDataLoadedCallback
+        ).execute()
     }
     
 }
