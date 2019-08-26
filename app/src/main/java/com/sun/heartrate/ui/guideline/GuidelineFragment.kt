@@ -19,4 +19,8 @@ class GuidelineFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_guideline, container, false)
+    
+    companion object {
+        fun newInstance() = GuidelineFragment()
+    }
 }

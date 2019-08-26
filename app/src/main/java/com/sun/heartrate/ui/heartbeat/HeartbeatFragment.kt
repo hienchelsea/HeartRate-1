@@ -19,4 +19,8 @@ class HeartbeatFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_heartbeat, container, false)
+    
+    companion object {
+        fun newInstance() = HeartbeatFragment()
+    }
 }
