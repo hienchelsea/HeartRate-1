@@ -1,9 +1,14 @@
 package com.sun.heartrate.data.repository
 
+import android.media.Image
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.HeartDataSource
 import com.sun.heartrate.data.source.HeartLocalDataSource
+import com.sun.heartrate.utils.ImageProcessingHelper
+import java.nio.ByteBuffer
 
 class HeartRepository(
     private val heartLocalDataSource: HeartLocalDataSource
@@ -38,6 +43,13 @@ class HeartRepository(
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     ) {
         heartLocalDataSource.getHeartsByStatus(image, onDataLoadedCallback)
+    }
+    
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun imageExtensions(
+        image: Image
+    ): Int {
+        return heartLocalDataSource.imageExtensions(image)
     }
     
 }

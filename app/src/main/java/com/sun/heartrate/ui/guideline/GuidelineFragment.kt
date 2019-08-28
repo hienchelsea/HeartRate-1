@@ -21,6 +21,7 @@ class GuidelineFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_guideline, container, false)
     
     companion object {
+        @JvmStatic
         fun newInstance() = GuidelineFragment()
     }
 }

@@ -5,8 +5,9 @@
     <string name="label_measure">Measure</string>
     <string name="label_history">History</string>
     <string name="label_start">Start</string>
+    <string name="label_pause">Pause</string>
     <string name="text_vision">Version 0.0.1</string>
     <string name="text_rate_original">000</string>
-    <string name="the_latest_measurement">The latest measurement</string>
+    <string name="title_the_latest_measurement">The latest measurement</string>
     <string name="title_help">Put your finger on the camera and press the start button</string>
 </resources>

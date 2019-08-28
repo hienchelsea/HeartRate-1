@@ -41,6 +41,3 @@ class AlphaAnimatorListener(
     override fun onAnimationStart(p0: Animator?) {
     }
 }
-
-
-

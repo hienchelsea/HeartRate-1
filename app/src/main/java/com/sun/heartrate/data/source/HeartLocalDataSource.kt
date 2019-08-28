@@ -1,11 +1,16 @@
 package com.sun.heartrate.data.source
 
+import android.media.Image
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.asynctask.AllHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.MonthlyHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.StatusHeartAsyncTask
+import com.sun.heartrate.utils.ImageProcessingHelper
+import java.nio.ByteBuffer
 
 class HeartLocalDataSource(
     private val heartDatabase: HeartDatabase
@@ -51,6 +56,16 @@ class HeartLocalDataSource(
             heartDatabase,
             onDataLoadedCallback
         ).execute()
+    }
+    
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun imageExtensions(image: Image): Int {
+        val buffer: ByteBuffer = ImageProcessingHelper.imageToByteBuffer(image)
+        return ImageProcessingHelper.decodeYUV420SPtoRedAvg(
+            buffer.array(),
+            image.width,
+            image.height
+        )
     }
     
 }
