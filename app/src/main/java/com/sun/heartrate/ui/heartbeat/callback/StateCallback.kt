@@ -1,11 +1,7 @@
 package com.sun.heartrate.ui.heartbeat.callback
 
-import android.annotation.TargetApi
 import android.hardware.camera2.CameraDevice
-import android.os.Build
-import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class StateCallback(
     private val cameraPreview: (camera: CameraDevice?) -> Unit
 ) : CameraDevice.StateCallback() {

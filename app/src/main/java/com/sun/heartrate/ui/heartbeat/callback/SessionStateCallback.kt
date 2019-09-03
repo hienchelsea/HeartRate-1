@@ -1,13 +1,10 @@
 package com.sun.heartrate.ui.heartbeat.callback
 
-import android.annotation.TargetApi
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CaptureRequest
 import android.media.ImageReader
-import android.os.Build
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class SessionStateCallback(
     private val cameraDevice: CameraDevice,
     private val imageReader: ImageReader,

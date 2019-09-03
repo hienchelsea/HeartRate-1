@@ -1,8 +1,6 @@
 package com.sun.heartrate.data.source
 
 import android.media.Image
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
@@ -57,15 +55,4 @@ class HeartLocalDataSource(
             onDataLoadedCallback
         ).execute()
     }
-    
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun imageExtensions(image: Image): Int {
-        val buffer: ByteBuffer = ImageProcessingHelper.imageToByteBuffer(image)
-        return ImageProcessingHelper.decodeYUV420SPtoRedAvg(
-            buffer.array(),
-            image.width,
-            image.height
-        )
-    }
-    
 }

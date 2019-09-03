@@ -1,16 +1,25 @@
 package com.sun.heartrate.ui.heartbeat
 
-import com.sun.heartrate.data.repository.HeartRepository
+import com.sun.heartrate.ui.heartbeat.camera.CameraHelper
 import com.sun.heartrate.utils.HandlingTheResult
+import com.sun.heartrate.utils.ImageProcessingHelper
 
 class HeartbeatPresenter(
-    private val heartbeatFragment: HeartbeatFragment,
-    private val heartRepository: HeartRepository
-) : HeartbeatContract.Presenter {
-    
-    override fun calculateHeartRate(currentRolling: Int, timeOpen: Long) {
-        if (System.currentTimeMillis() - timeOpen > MEASUREMENT_TIME) {
-            heartbeatFragment.closeCamera()
+    private val view: HeartbeatContract.View
+) : HeartbeatContract.Presenter, CameraHelper.OnDataLoadImageCallback {
+    override fun loadDataImage(
+        value: ByteArray,
+        widthImage: Int,
+        heightImage: Int,
+        timeStart: Long
+    ) {
+        val currentRolling = ImageProcessingHelper.imageConversionProcessing(
+            value,
+            widthImage,
+            heightImage
+        )
+        if (System.currentTimeMillis() - timeStart > MEASUREMENT_TIME) {
+            view.closeCamera()
         } else {
             when {
                 MIN_ROLLING > currentRolling -> {
@@ -18,8 +27,20 @@ class HeartbeatPresenter(
                 else -> HandlingTheResult.handleResultImage(currentRolling)
             }
         }
-        
     }
+    
+    private val cameraHelper = CameraHelper(view.getCameraManager(), this)
+    
+    override fun openCamera() {
+        cameraHelper.openCamera()
+    }
+    
+    override fun closeCamera() {
+        cameraHelper.closeCamera()
+    }
+    
+    override fun checkCamera(): Boolean = cameraHelper.checkCamera()
+    
     
     companion object {
         const val SIZE_AVERAGE_INDEX = 10

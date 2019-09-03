@@ -1,14 +1,11 @@
 package com.sun.heartrate.utils
 
-import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.graphics.ImageFormat
 import android.media.Image
-import android.os.Build
 import java.nio.ByteBuffer
 
 object ImageProcessingHelper {
-    fun decodeYUV420SPtoRedAvg(yuv420sp: ByteArray, width: Int, height: Int): Int {
+    private fun decodeYUV420SPtoRedAvg(yuv420sp: ByteArray, width: Int, height: Int): Int {
         val frameSize = width * height
         val sum = decodeYUV420SPtoRedSum(yuv420sp, width, height)
         return (sum / frameSize)
@@ -56,8 +53,6 @@ object ImageProcessingHelper {
         return sum
     }
     
-    @SuppressLint("NewApi")
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     fun imageToByteBuffer(image: Image): ByteBuffer {
         val crop = image.cropRect
         val width = crop.width()
@@ -125,5 +120,13 @@ object ImageProcessingHelper {
             }
         }
         return output
+    }
+    
+    fun imageConversionProcessing(value: ByteArray, widthImage: Int, heightImage: Int): Int {
+        return decodeYUV420SPtoRedAvg(
+            value,
+            widthImage,
+            heightImage
+        )
     }
 }

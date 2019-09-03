@@ -26,7 +26,6 @@ object HandlingTheResult {
         }
         val heartAvg = averageHeartRateCurrent()
         if (heartAvg > 0) {
-            Log.d("Hhehehehe", heartAvg.toString())
         }
     }
     
