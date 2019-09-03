@@ -21,6 +21,7 @@ class HistoryFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_history, container, false)
     
     companion object {
+        @JvmStatic
         fun newInstance() = HistoryFragment()
     }
 }

@@ -1,5 +1,6 @@
 package com.sun.heartrate.data.repository
 
+import android.media.Image
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.HeartDataSource
@@ -39,5 +40,4 @@ class HeartRepository(
     ) {
         heartLocalDataSource.getHeartsByStatus(image, onDataLoadedCallback)
     }
-    
 }

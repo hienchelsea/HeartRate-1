@@ -26,13 +26,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initSplashView()
         initViewPager()
+        
     }
     
     private fun initSplashView() {
         relativeSplashView?.visibility = View.VISIBLE
         CountDownAnimation(COUNT_DOWN_INTERVAL) {
             hideSplashView(relativeSplashView)
-        }
+        }.start()
     }
     
     private fun hideSplashView(view: View) {

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.sun.heartrate.data.model.HeartModel
 
 class HeartDatabase(
-    context: Context
+    context: Context?
 ) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     
     override fun onCreate(db: SQLiteDatabase) {
@@ -75,8 +75,8 @@ class HeartDatabase(
     }
     
     private fun getHeart(cursor: Cursor): List<HeartModel> {
-        val hearts= mutableListOf<HeartModel>()
-        if (cursor != null && cursor.moveToFirst()) {
+        val hearts = mutableListOf<HeartModel>()
+        if (cursor.moveToFirst()) {
             do {
                 hearts.add(HeartModel(cursor))
             } while (cursor.moveToNext())
