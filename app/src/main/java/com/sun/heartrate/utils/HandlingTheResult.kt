@@ -1,6 +1,5 @@
 package com.sun.heartrate.utils
 
-import android.util.Log
 import com.sun.heartrate.ui.heartbeat.HeartbeatPresenter
 
 object HandlingTheResult {
@@ -17,7 +16,7 @@ object HandlingTheResult {
     private var beatsIndex = 0
     private var averageIndex = 0
     
-    fun handleResultImage(currentRolling: Int) {
+    fun handleResultImage(currentRolling: Int): Int {
         beats = amplitudeVaries(currentRolling, beats)
         rollingAverage[averageIndex] = currentRolling
         averageIndex++
@@ -25,8 +24,7 @@ object HandlingTheResult {
             averageIndex = 0
         }
         val heartAvg = averageHeartRateCurrent()
-        if (heartAvg > 0) {
-        }
+        return if (heartAvg > 0) heartAvg else 0
     }
     
     private fun amplitudeVaries(currentRolling: Int, beats: Int): Int {

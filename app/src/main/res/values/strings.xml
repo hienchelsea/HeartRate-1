@@ -10,4 +10,6 @@
     <string name="text_rate_original">000</string>
     <string name="title_the_latest_measurement">The latest measurement</string>
     <string name="title_help">Put your finger on the camera and press the start button</string>
+    <string name="title_measuring_heart_rate">MEASURING HEART RATE</string>
+    <string name="title_please_put_your_hand_on_the_camera">Please put your hand on the camera</string>
 </resources>
