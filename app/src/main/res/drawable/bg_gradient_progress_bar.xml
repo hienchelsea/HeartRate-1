@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="@dimen/dp_6"/>
+            <solid android:color="@color/colorWhileDark"/>
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="@dimen/dp_6"/>
+                <gradient
+                    android:centerColor="@android:color/holo_green_light"
+                    android:endColor="@android:color/holo_red_light"
+                    android:startColor="@android:color/holo_red_light" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

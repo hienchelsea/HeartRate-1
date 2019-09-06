@@ -16,15 +16,17 @@ import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.repository.HeartRepository
 import com.sun.heartrate.data.source.HeartLocalDataSource
 import com.sun.heartrate.ui.heartbeat.camera.CameraHelper
+import com.sun.heartrate.ui.saveheartbeat.SaveHeartbeatFragment
 import com.sun.heartrate.utils.CountDownProgressBar
 import com.sun.heartrate.utils.createProgressPercent
 import kotlinx.android.synthetic.main.fragment_heartbeat.*
 import java.text.DecimalFormat
 
-class HeartbeatFragment : Fragment(),
+class HeartbeatFragment(private val onLoadFragment: OnLoadFragment) : Fragment(),
     HeartbeatContract.View,
     View.OnClickListener,
-    CameraHelper.OnDataLoadImageCallback {
+    CameraHelper.OnDataLoadImageCallback,
+    SaveHeartbeatFragment.OnBackPressed {
     
     private val heartbeatPresenter: HeartbeatContract.Presenter by lazy {
         HeartbeatPresenter(this)
@@ -33,15 +35,17 @@ class HeartbeatFragment : Fragment(),
     private val heartDatabase: HeartDatabase by lazy {
         HeartDatabase(context)
     }
+    
     private val heartLocalDataSource: HeartLocalDataSource by lazy {
         HeartLocalDataSource(heartDatabase)
     }
+    
     private val heartRepository: HeartRepository by lazy {
         HeartRepository(heartLocalDataSource)
     }
     
     private val countDownProgressBar = CountDownProgressBar(MEASUREMENT_TIME) {
-        this.updateProgressBar(
+        updateProgressBar(
             createProgressPercent(
                 getOpeningCameraTime(),
                 MEASUREMENT_TIME.toInt()
@@ -55,6 +59,7 @@ class HeartbeatFragment : Fragment(),
             this
         )
     }
+    
     private val formatRateNumber = DecimalFormat("#000")
     private var cameraBootTime = 0L
     
@@ -88,6 +93,7 @@ class HeartbeatFragment : Fragment(),
     }
     
     private fun openCamera() {
+        
         cameraHelper.openCamera()
         cameraBootTime = System.currentTimeMillis()
         updateUiScreenHeartbeat()
@@ -126,6 +132,7 @@ class HeartbeatFragment : Fragment(),
     private fun showButtonLabel(isRecording: Boolean) {
         buttonStart?.text = if (isRecording) getText(R.string.label_pause) else getText(R.string.label_start)
     }
+    
     private fun restartCountDownProgressBar(isRecording: Boolean) {
         countDownProgressBar.cancel()
         updateProgressBar(0)
@@ -134,6 +141,7 @@ class HeartbeatFragment : Fragment(),
     
     private fun updateProgressBar(progressPercent: Int) {
         progressBarTime?.progress = progressPercent
+        nextSaveHeartBeat(progressPercent)
     }
     
     override fun displayHeatRate(rateNumber: Int) {
@@ -169,15 +177,23 @@ class HeartbeatFragment : Fragment(),
             isRecording() -> closeCamera()
             else -> openCamera()
         }
-        
+    }
+    
+    private fun nextSaveHeartBeat(progressPercent: Int) {
+        if (progressPercent > PERCENT_NEXT_FRAGMENT)
+            onLoadFragment.nextFragment(SaveHeartbeatFragment.newInstance(this))
     }
     
     private fun hasCameraPermissions() = context?.let {
-         getCurrentCameraPermission(it) == PackageManager.PERMISSION_GRANTED
+        getCurrentCameraPermission(it) == PackageManager.PERMISSION_GRANTED
     } ?: false
     
     private fun getCurrentCameraPermission(context: Context) =
         ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+    
+    override fun backFragment() {
+        onLoadFragment.backFragment()
+    }
     
     override fun onPause() {
         super.onPause()
@@ -186,9 +202,15 @@ class HeartbeatFragment : Fragment(),
     
     companion object {
         @JvmStatic
-        fun newInstance() = HeartbeatFragment()
+        fun newInstance(onLoadFragment: OnLoadFragment) = HeartbeatFragment(onLoadFragment)
         
         const val CODE_PERMISSION_CAMERA = 200
         const val MEASUREMENT_TIME = 26000L
+        const val PERCENT_NEXT_FRAGMENT = 97
+    }
+    
+    interface OnLoadFragment {
+        fun nextFragment(fragment: Fragment)
+        fun backFragment()
     }
 }
