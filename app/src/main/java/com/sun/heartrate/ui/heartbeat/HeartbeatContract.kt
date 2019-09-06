@@ -1,16 +1,19 @@
 package com.sun.heartrate.ui.heartbeat
 
-import android.hardware.camera2.CameraManager
-
 interface HeartbeatContract {
     interface View {
-        fun getCameraManager(): CameraManager
         fun closeCamera()
+        fun displayHeatRate(rateNumber: Int)
+        fun displayGuideline(guideline: Int)
     }
     
     interface Presenter {
-        fun openCamera()
-        fun closeCamera()
-        fun checkCamera(): Boolean
+        
+        fun getDataImage(
+            value: ByteArray,
+            widthImage: Int,
+            heightImage: Int,
+            timeStart: Long
+        )
     }
 }

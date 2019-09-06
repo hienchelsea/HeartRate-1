@@ -71,8 +71,15 @@ class CameraHelper(
                 add(imageReader.surface)
             }
             imageReader.setOnImageAvailableListener(
-                OnImageAvailableListener { values: ByteArray, widthImage: Int, heightImage: Int ->
-                    onDataLoadImageCallback.loadDataImage(values, widthImage, heightImage, timeStart)
+                OnImageAvailableListener { values: ByteArray,
+                                           widthImage: Int,
+                                           heightImage: Int ->
+                    onDataLoadImageCallback.loadDataImage(
+                        values,
+                        widthImage,
+                        heightImage,
+                        timeStart
+                    )
                 },
                 null
             
@@ -118,7 +125,12 @@ class CameraHelper(
     }
     
     interface OnDataLoadImageCallback {
-        fun loadDataImage(value: ByteArray, widthImage: Int, heightImage: Int, timeStart: Long)
+        fun loadDataImage(
+            value: ByteArray,
+            widthImage: Int,
+            heightImage: Int,
+            timeStart: Long
+        )
     }
     
 }
