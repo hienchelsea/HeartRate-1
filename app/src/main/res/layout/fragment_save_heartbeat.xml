@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhile">
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_56"
+        android:layout_margin="@dimen/dp_16"
+        android:background="@drawable/bg_rectangle"
+        android:text="@string/label_save"
+        android:textColor="@color/colorWhile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_16"
+        android:background="@color/colorWhileDark"
+        android:maxLines="2"
+        android:minLines="1"
+        android:padding="@dimen/dp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewNote" />
+
+    <ImageView
+        android:id="@+id/imageViewBeforeTraining"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorWhileDark"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_before_training_dark"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewAfterTraining"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewAfterTraining"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorWhileDark"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_after_training_dark"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewGeneral"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBeforeTraining"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewGeneral"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorWhileDark"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_general_red"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewHeavyTraining"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewAfterTraining"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewHeavyTraining"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorWhileDark"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_heavy_training_dark"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewRested"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewGeneral"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewRested"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorWhileDark"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_rested_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewHeavyTraining"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorRed"
+        android:padding="@dimen/dp_16"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSaveHeart"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:progress="50"
+        android:progressDrawable="@drawable/bg_gradient_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTime" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/colorRed"
+        android:gravity="center|start"
+        android:padding="@dimen/dp_16"
+        android:text="@string/text_save_heart"
+        android:textColor="@color/colorWhile"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageViewBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textRateNumberSave"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_150"
+        android:gravity="center"
+        android:text="@string/text_rate_original"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/sp_48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textRateNumberSave" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:gravity="center|left"
+        android:padding="@dimen/dp_16"
+        android:text="@string/title_status"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBarSaveHeart"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/textViewBeforeTraining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/title_before_training"
+        app:layout_constraintEnd_toStartOf="@+id/textViewAfterTraining"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewGeneral" />
+
+    <TextView
+        android:id="@+id/textViewAfterTraining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/title_after_training"
+        app:layout_constraintEnd_toStartOf="@+id/textViewGeneral"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewBeforeTraining"
+        app:layout_constraintTop_toBottomOf="@id/imageViewGeneral" />
+
+    <TextView
+        android:id="@+id/textViewGeneral"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/title_general"
+        app:layout_constraintEnd_toStartOf="@+id/textViewHeavyTraining"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewAfterTraining"
+        app:layout_constraintTop_toBottomOf="@id/imageViewGeneral" />
+
+    <TextView
+        android:id="@+id/textViewHeavyTraining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/title_heavy_training"
+        app:layout_constraintEnd_toStartOf="@+id/textViewRested"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewGeneral"
+        app:layout_constraintTop_toBottomOf="@id/imageViewGeneral" />
+
+    <TextView
+        android:id="@+id/textViewRested"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/title_rested"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewHeavyTraining"
+        app:layout_constraintTop_toBottomOf="@id/imageViewGeneral" />
+
+    <TextView
+        android:id="@+id/textViewNote"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:padding="@dimen/dp_16"
+        android:text="@string/title_note"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewBeforeTraining" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
