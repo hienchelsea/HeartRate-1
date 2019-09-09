@@ -30,7 +30,7 @@ class HeartbeatFragment(
     HeartbeatContract.View,
     View.OnClickListener,
     CameraHelper.OnDataLoadImageCallback,
-    SaveHeartbeatFragment.OnBackPressed {
+    SaveHeartbeatFragment.OnBackHeartbeatFragment {
     
     private val heartbeatPresenter: HeartbeatContract.Presenter by lazy {
         HeartbeatPresenter(this)
@@ -100,7 +100,6 @@ class HeartbeatFragment(
     }
     
     private fun openCamera() {
-        
         cameraHelper.openCamera()
         cameraBootTime = System.currentTimeMillis()
         updateUiScreenHeartbeat()
@@ -153,7 +152,7 @@ class HeartbeatFragment(
     
     override fun displayHeatRate(rateNumber: Int) {
         textRateNumber?.text = formatRateNumber.format(rateNumber.toLong())
-        this.rateNumber=rateNumber.toLong()
+        this.rateNumber = rateNumber.toLong()
     }
     
     private fun displayImageViewHeart(isRecording: Boolean) {
@@ -193,7 +192,7 @@ class HeartbeatFragment(
                 SaveHeartbeatFragment.newInstance(this,
                     numberRate,
                     simpleDateFormat.format(System.currentTimeMillis())
-                    )
+                )
             )
     }
     

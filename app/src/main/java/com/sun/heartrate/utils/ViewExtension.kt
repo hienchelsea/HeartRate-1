@@ -9,3 +9,7 @@ fun View?.gone() {
 fun View?.show() {
     this?.visibility = View.VISIBLE
 }
+
+fun View.OnClickListener.assignViews(vararg views: View?) {
+    views.forEach { it?.setOnClickListener(this) }
+}
