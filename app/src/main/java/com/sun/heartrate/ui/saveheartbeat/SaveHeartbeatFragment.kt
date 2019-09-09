@@ -1,5 +1,6 @@
 package com.sun.heartrate.ui.saveheartbeat
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class SaveHeartbeatFragment(
         initView()
     }
     
+    @SuppressLint("SetTextI18n")
     private fun initView() {
         assignViews(
             buttonSave,
@@ -42,6 +44,11 @@ class SaveHeartbeatFragment(
             imageViewHeavyTraining,
             imageViewRested
         )
+        textRateNumberSave.text = arguments?.getString(NUMBER_RATE).toString() + BMP
+        textViewTime.text = arguments?.getString(MEASUREMENT_TIME).toString()
+        progressBarSaveHeart.progress = (arguments?.getString(NUMBER_RATE)?.toInt()!!
+            - NUMBER_RATE_MIN
+            ) * 100 / (NUMBER_RATE_MAX - NUMBER_RATE_MIN)
     }
     
     private fun View.OnClickListener.assignViews(vararg views: View?) {
@@ -94,13 +101,28 @@ class SaveHeartbeatFragment(
     
     companion object {
         @JvmStatic
-        fun newInstance(onBackPressed: OnBackPressed) = SaveHeartbeatFragment(onBackPressed)
+        fun newInstance(
+            onBackPressed: OnBackPressed,
+            numberRate: String, measurementTime: String
+        ): SaveHeartbeatFragment {
+            val saveHeartbeatFragment = SaveHeartbeatFragment(onBackPressed)
+            val bundle = Bundle()
+            bundle.putString(NUMBER_RATE, numberRate)
+            bundle.putString(MEASUREMENT_TIME, measurementTime)
+            saveHeartbeatFragment.arguments = bundle
+            return saveHeartbeatFragment
+        }
         
         const val BEFORE_TRAINING = 1
         const val AFTER_TRAINING = 2
         const val GENERAL = 3
         const val HEAVY_TRAINING = 4
         const val RESTED = 5
+        const val NUMBER_RATE_MAX = 150
+        const val NUMBER_RATE_MIN = 30
+        const val NUMBER_RATE = "NumberRate"
+        const val MEASUREMENT_TIME = "MeasurementTime"
+        const val BMP = " BMP"
     }
     
     interface OnBackPressed {

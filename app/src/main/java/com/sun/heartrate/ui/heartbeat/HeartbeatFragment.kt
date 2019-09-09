@@ -1,6 +1,7 @@
 package com.sun.heartrate.ui.heartbeat
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.camera2.*
@@ -21,8 +22,11 @@ import com.sun.heartrate.utils.CountDownProgressBar
 import com.sun.heartrate.utils.createProgressPercent
 import kotlinx.android.synthetic.main.fragment_heartbeat.*
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 
-class HeartbeatFragment(private val onLoadFragment: OnLoadFragment) : Fragment(),
+class HeartbeatFragment(
+    private val onLoadFragment: OnLoadFragment
+) : Fragment(),
     HeartbeatContract.View,
     View.OnClickListener,
     CameraHelper.OnDataLoadImageCallback,
@@ -61,7 +65,10 @@ class HeartbeatFragment(private val onLoadFragment: OnLoadFragment) : Fragment()
     }
     
     private val formatRateNumber = DecimalFormat("#000")
+    @SuppressLint("SimpleDateFormat")
+    private val simpleDateFormat = SimpleDateFormat("HH:mm:ss dd-MM-yyyy")
     private var cameraBootTime = 0L
+    private var rateNumber = 0L
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,11 +148,12 @@ class HeartbeatFragment(private val onLoadFragment: OnLoadFragment) : Fragment()
     
     private fun updateProgressBar(progressPercent: Int) {
         progressBarTime?.progress = progressPercent
-        nextSaveHeartBeat(progressPercent)
+        nextSaveHeartBeat(progressPercent, rateNumber.toString())
     }
     
     override fun displayHeatRate(rateNumber: Int) {
         textRateNumber?.text = formatRateNumber.format(rateNumber.toLong())
+        this.rateNumber=rateNumber.toLong()
     }
     
     private fun displayImageViewHeart(isRecording: Boolean) {
@@ -179,9 +187,14 @@ class HeartbeatFragment(private val onLoadFragment: OnLoadFragment) : Fragment()
         }
     }
     
-    private fun nextSaveHeartBeat(progressPercent: Int) {
+    private fun nextSaveHeartBeat(progressPercent: Int, numberRate: String) {
         if (progressPercent > PERCENT_NEXT_FRAGMENT)
-            onLoadFragment.nextFragment(SaveHeartbeatFragment.newInstance(this))
+            onLoadFragment.nextFragment(
+                SaveHeartbeatFragment.newInstance(this,
+                    numberRate,
+                    simpleDateFormat.format(System.currentTimeMillis())
+                    )
+            )
     }
     
     private fun hasCameraPermissions() = context?.let {
