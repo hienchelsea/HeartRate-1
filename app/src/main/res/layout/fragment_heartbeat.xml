@@ -7,13 +7,15 @@
 
     <Button
         android:id="@+id/buttonStart"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dp_56"
         android:layout_margin="@dimen/dp_24"
-        android:background="@color/colorRed"
+        android:background="@drawable/bg_rectangle"
         android:text="@string/label_start"
         android:textColor="@color/colorWhile"
-        app:layout_constraintTop_toBottomOf="@id/textViewHelp" />
+        app:layout_constraintTop_toBottomOf="@id/textViewHelp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageHeart"
@@ -55,7 +57,7 @@
 
     <TextView
         android:id="@+id/textViewHelp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minLines="2"
@@ -79,31 +81,35 @@
         app:layout_constraintTop_toBottomOf="@id/textRateNumber" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_40"
         android:gravity="center"
         android:padding="@dimen/dp_16"
         android:text="@string/title_the_latest_measurement"
-        android:textColor="@color/colorWhileDark"
+        android:textColor="@color/colorDark"
         android:textSize="@dimen/dp_14"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textRateLast"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_16"
         android:gravity="center"
         android:padding="@dimen/dp_16"
-        android:textColor="@color/colorWhileDark"
+        android:textColor="@color/colorDark"
         android:textSize="@dimen/dp_14"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCenter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 

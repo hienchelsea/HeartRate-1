@@ -33,15 +33,17 @@ class HeartbeatFragment : Fragment(),
     private val heartDatabase: HeartDatabase by lazy {
         HeartDatabase(context)
     }
+    
     private val heartLocalDataSource: HeartLocalDataSource by lazy {
         HeartLocalDataSource(heartDatabase)
     }
+    
     private val heartRepository: HeartRepository by lazy {
         HeartRepository(heartLocalDataSource)
     }
     
     private val countDownProgressBar = CountDownProgressBar(MEASUREMENT_TIME) {
-        this.updateProgressBar(
+        updateProgressBar(
             createProgressPercent(
                 getOpeningCameraTime(),
                 MEASUREMENT_TIME.toInt()
@@ -55,6 +57,7 @@ class HeartbeatFragment : Fragment(),
             this
         )
     }
+    
     private val formatRateNumber = DecimalFormat("#000")
     private var cameraBootTime = 0L
     
@@ -120,12 +123,12 @@ class HeartbeatFragment : Fragment(),
         }
         displayHeatRate(0)
         displayGuideline(R.string.title_measuring_heart_rate)
-        
     }
     
     private fun showButtonLabel(isRecording: Boolean) {
         buttonStart?.text = if (isRecording) getText(R.string.label_pause) else getText(R.string.label_start)
     }
+    
     private fun restartCountDownProgressBar(isRecording: Boolean) {
         countDownProgressBar.cancel()
         updateProgressBar(0)
@@ -169,11 +172,10 @@ class HeartbeatFragment : Fragment(),
             isRecording() -> closeCamera()
             else -> openCamera()
         }
-        
     }
     
     private fun hasCameraPermissions() = context?.let {
-         getCurrentCameraPermission(it) == PackageManager.PERMISSION_GRANTED
+        getCurrentCameraPermission(it) == PackageManager.PERMISSION_GRANTED
     } ?: false
     
     private fun getCurrentCameraPermission(context: Context) =
