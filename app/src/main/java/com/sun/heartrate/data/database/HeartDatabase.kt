@@ -85,7 +85,7 @@ class HeartDatabase(
         return hearts
     }
     
-    fun deletelHeart(heartModel: HeartModel): Boolean {
+    fun deleteHeart(heartModel: HeartModel): Boolean {
         val db = this.writableDatabase
         val result = db.delete(
             TABLE_NAME,

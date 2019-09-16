@@ -147,7 +147,7 @@ class HeartbeatFragment(
     
     private fun updateProgressBar(progressPercent: Int) {
         progressBarTime?.progress = progressPercent
-        nextSaveHeartBeat(progressPercent, rateNumber.toString())
+        nextSaveHeartBeat(progressPercent, rateNumber.toInt())
     }
     
     override fun displayHeatRate(rateNumber: Int) {
@@ -186,12 +186,12 @@ class HeartbeatFragment(
         }
     }
     
-    private fun nextSaveHeartBeat(progressPercent: Int, numberRate: String) {
+    private fun nextSaveHeartBeat(progressPercent: Int, numberRate: Int) {
         if (progressPercent > PERCENT_NEXT_FRAGMENT)
             onLoadFragment.nextFragment(
                 SaveHeartbeatFragment.newInstance(this,
                     numberRate,
-                    simpleDateFormat.format(System.currentTimeMillis())
+                    System.currentTimeMillis()
                 )
             )
     }

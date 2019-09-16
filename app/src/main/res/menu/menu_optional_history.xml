@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemShowAll"
+        android:title="@string/title_show_all" />
+    <item
+        android:id="@+id/itemGeneral"
+        android:title="@string/title_general" />
+    <item
+        android:id="@+id/itemBeforeTraining"
+        android:title="@string/title_before_training" />
+    <item
+        android:id="@+id/itemAfterTraining"
+        android:title="@string/title_after_training" />
+    <item
+        android:id="@+id/itemHeavyTraining"
+        android:title="@string/title_heavy_training" />
+    <item
+        android:id="@+id/itemRested"
+        android:title="@string/title_rested" />
+</menu>

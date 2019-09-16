@@ -5,17 +5,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
+import com.sun.heartrate.data.database.HeartDatabase
+import com.sun.heartrate.data.model.HeartModel
+import com.sun.heartrate.data.repository.HeartRepository
+import com.sun.heartrate.data.source.HeartLocalDataSource
 import com.sun.heartrate.utils.assignViews
+import com.sun.heartrate.utils.createProgressPercent
 import kotlinx.android.synthetic.main.fragment_save_heartbeat.*
+import java.text.SimpleDateFormat
 
+@SuppressLint("SimpleDateFormat")
 class SaveHeartbeatFragment(
     private val onBackPressed: OnBackHeartbeatFragment
 ) : Fragment(),
-    View.OnClickListener {
+    View.OnClickListener,
+    SaveHeartbeatContract.View {
+    private val formatDate = SimpleDateFormat("HH:mm:ss dd-MM-yyyy")
+    private val formatMonth = SimpleDateFormat("MM-yyyy")
+    private var isStatusLast = GENERAL
+    private var idImage = R.drawable.ic_general_red
+    private val heartModel: HeartModel by lazy {
+        HeartModel(
+            ID,
+            editTextNote.text.toString(),
+            arguments?.getInt(NUMBER_RATE)!!,
+            idImage,
+            formatMonth.format(arguments?.getLong(MEASUREMENT_TIME)!!),
+            arguments?.getLong(MEASUREMENT_TIME)!!)
+    }
+    private val saveHeartbeatPresenter: SaveHeartbeatContract.Presenter by lazy {
+        SaveHeartbeatPresenter(heartRepository, this, heartModel)
+    }
     
-    var isStatusLast = GENERAL
+    private val heartRepository: HeartRepository by lazy {
+        HeartRepository(heartLocalDataSource)
+    }
+    
+    private val heartLocalDataSource: HeartLocalDataSource by lazy {
+        HeartLocalDataSource(heartDatabase)
+    }
+    
+    private val heartDatabase: HeartDatabase by lazy {
+        HeartDatabase(context)
+    }
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -33,13 +70,13 @@ class SaveHeartbeatFragment(
         initView()
         initListener()
     }
+    
     @SuppressLint("SetTextI18n")
     private fun initView() {
-        textRateNumberSave.text = arguments?.getString(NUMBER_RATE).toString() + BMP
-        textViewTime.text = arguments?.getString(MEASUREMENT_TIME).toString()
-        progressBarSaveHeart.progress = (arguments?.getString(NUMBER_RATE)?.toInt()!!
-            - NUMBER_RATE_MIN
-            ) * 100 / (NUMBER_RATE_MAX - NUMBER_RATE_MIN)
+        textRateNumberSave.text = arguments?.getInt(NUMBER_RATE).toString() + BMP
+        textViewTime.text = formatDate.format(arguments?.getLong(MEASUREMENT_TIME)!!)
+        progressBarSaveHeart.progress =
+            createProgressPercent(arguments?.getInt(NUMBER_RATE)!!, NUMBER_RATE_MAX)
     }
     
     private fun initListener() {
@@ -55,12 +92,22 @@ class SaveHeartbeatFragment(
         )
     }
     
+    override fun showToastNotification(value: Boolean) {
+        var textShow = getString(R.string.title_add_data_successfully)
+        if (!value) textShow = getString(R.string.title_add_data_failed)
+        Toast.makeText(
+            context,
+            textShow,
+            Toast.LENGTH_LONG
+        ).show()
+        
+        backHeartFragment()
+    }
+    
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.imageViewBack -> onBackPressed.backFragment()
-            R.id.buttonSave -> {
-                saveDataThenBack()
-            }
+            R.id.imageViewBack -> backHeartFragment()
+            R.id.buttonSave -> saveDataHeart()
             R.id.imageViewBeforeTraining -> selectStatus(BEFORE_TRAINING, isStatusLast)
             R.id.imageViewAfterTraining -> selectStatus(AFTER_TRAINING, isStatusLast)
             R.id.imageViewGeneral -> selectStatus(GENERAL, isStatusLast)
@@ -69,23 +116,36 @@ class SaveHeartbeatFragment(
         }
     }
     
-    private fun saveDataThenBack() {
-        //add to sql
+    private fun saveDataHeart() {
+        saveHeartbeatPresenter.saveHeartbeat()
+    }
+    
+    private fun backHeartFragment() {
         onBackPressed.backFragment()
     }
     
     private fun selectStatus(isStatusCurrent: Int, isStatusLast: Int) {
         when (isStatusCurrent) {
-            BEFORE_TRAINING ->
-                imageViewBeforeTraining.setImageResource(R.drawable.ic_before_training_red)
-            AFTER_TRAINING ->
-                imageViewAfterTraining.setImageResource(R.drawable.ic_after_training_red)
-            GENERAL ->
-                imageViewGeneral.setImageResource(R.drawable.ic_general_red)
-            HEAVY_TRAINING ->
-                imageViewHeavyTraining.setImageResource(R.drawable.ic_heavy_training_red)
-            RESTED ->
-                imageViewRested.setImageResource(R.drawable.ic_rested_red)
+            BEFORE_TRAINING -> setImageStatus(
+                R.drawable.ic_before_training_red,
+                imageViewBeforeTraining
+            )
+            AFTER_TRAINING -> setImageStatus(
+                R.drawable.ic_after_training_red,
+                imageViewAfterTraining
+            )
+            GENERAL -> setImageStatus(
+                R.drawable.ic_general_red,
+                imageViewGeneral
+            )
+            HEAVY_TRAINING -> setImageStatus(
+                R.drawable.ic_heavy_training_red,
+                imageViewHeavyTraining
+            )
+            RESTED -> setImageStatus(
+                R.drawable.ic_rested_red,
+                imageViewRested
+            )
         }
         
         when (isStatusLast) {
@@ -103,16 +163,22 @@ class SaveHeartbeatFragment(
         this.isStatusLast = isStatusCurrent
     }
     
+    private fun setImageStatus(idImage: Int, image: ImageView) {
+        image.setImageResource(idImage)
+        this.idImage = idImage
+    }
+    
     companion object {
         @JvmStatic
         fun newInstance(
             onBackPressed: OnBackHeartbeatFragment,
-            numberRate: String, measurementTime: String
+            numberRate: Int,
+            measurementTime: Long
         ): SaveHeartbeatFragment {
             val saveHeartbeatFragment = SaveHeartbeatFragment(onBackPressed)
             val bundle = Bundle()
-            bundle.putString(NUMBER_RATE, numberRate)
-            bundle.putString(MEASUREMENT_TIME, measurementTime)
+            bundle.putInt(NUMBER_RATE, numberRate)
+            bundle.putLong(MEASUREMENT_TIME, measurementTime)
             saveHeartbeatFragment.arguments = bundle
             return saveHeartbeatFragment
         }
@@ -123,10 +189,10 @@ class SaveHeartbeatFragment(
         const val HEAVY_TRAINING = 4
         const val RESTED = 5
         const val NUMBER_RATE_MAX = 150
-        const val NUMBER_RATE_MIN = 30
         const val NUMBER_RATE = "NumberRate"
         const val MEASUREMENT_TIME = "MeasurementTime"
         const val BMP = " BMP"
+        const val ID = 0
     }
     
     interface OnBackHeartbeatFragment {

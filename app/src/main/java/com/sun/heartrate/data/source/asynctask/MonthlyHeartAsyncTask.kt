@@ -8,7 +8,7 @@ class MonthlyHeartAsyncTask(
     private val value: String,
     private val heartDatabase: HeartDatabase,
     callback: OnDataLoadedCallback<List<HeartModel>>
-) : HeartTask(callback) {
+) : HeartTask<List<HeartModel>>(callback) {
     
     override fun getData() = heartDatabase.getHeartByMonth(value)
 }

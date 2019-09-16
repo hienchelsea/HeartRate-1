@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeMain"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/linearAppBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
         android:background="@color/colorRed"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="@dimen/dp_56"
             android:layout_height="@dimen/dp_56"
             android:padding="@dimen/dp_16"
             android:src="@drawable/ic_menu_option" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -26,15 +26,25 @@
             android:textColor="@color/colorWhile"
             android:textSize="@dimen/sp_18" />
 
+        <ImageView
+            android:id="@+id/imageViewOption"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="@dimen/dp_56"
+            android:padding="@dimen/dp_20"
+            android:src="@drawable/ic_dot"
+            android:visibility="gone" />
+
     </LinearLayout>
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutMain"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_56"
-        android:layout_below="@id/linearAppBar" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tabLayoutMain" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:layout_below="@id/linearAppBar" />
 </RelativeLayout>

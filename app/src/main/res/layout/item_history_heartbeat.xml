@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        android:background="@drawable/bg_rectangle_while"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_70">
+
+            <ImageView
+                android:id="@+id/imageStatus"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_70"
+                android:background="@drawable/bg_circle_dark"
+                android:padding="@dimen/dp_16"
+                android:src="@drawable/ic_general_red" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_70"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textViewNumberRate"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:text="83 BMP"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/sp_20" />
+
+                    <ImageView
+                        android:id="@+id/imageViewDelete"
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="@dimen/dp_35"
+                        android:padding="@dimen/dp_6"
+                        android:src="@drawable/icon_delete" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:text="Ghi chu cho lan do nay"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end|center"
+            android:padding="@dimen/dp_10"
+            android:text="22:01:22 22/22/2222"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
