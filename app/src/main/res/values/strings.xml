@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Heart Rate</string>
     <string name="label_bmp">BMP</string>
     <string name="label_help">Help</string>
@@ -15,6 +15,11 @@
     <string name="title_after_training">After training</string>
     <string name="title_heavy_training">Heavy training</string>
     <string name="title_rested">Rested</string>
+    <string name="title_time_notification">08:00</string>
+    <string name="title_app_review">App reviews</string>
+    <string name="title_language">Change language</string>
+    <string name="title_measurement_time">Measurement time</string>
+    <string name="title_remind">Remind when the time to measure</string>
     <string name="title_general">General</string>
     <string name="title_note">Note</string>
     <string name="title_status">Status</string>
@@ -24,4 +29,10 @@
     <string name="title_please_put_your_hand_on_the_camera">Please put your hand on the camera</string>
     <string name="title_add_data_successfully">Add data successfully</string>
     <string name="title_add_data_failed">Add data failed</string>
+    <string name="title_guideline">Please read carefully before using
+\n\n* Open the app and hold your index finger to cover the camera\'s lens and flash.
+\n* Do not hold it too tight or it will cause the machine to not flow resulting in inaccurate readings.
+\n* After 10 seconds there will be results of that time, wait for the next 15 seconds to get the final measurement results</string>
+    <string name="title_guideline_note">
+Note: This is not a medical product. The calculation information is for reference only for personal health.</string>
 </resources>

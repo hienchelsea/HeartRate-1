@@ -1,8 +1,11 @@
 package com.sun.heartrate.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
 import com.sun.heartrate.ui.guideline.GuidelineFragment
@@ -13,6 +16,7 @@ import com.sun.heartrate.utils.animator.CountDownAnimation
 import com.sun.heartrate.utils.assignViews
 import com.sun.heartrate.utils.gone
 import com.sun.heartrate.utils.show
+import kotlinx.android.synthetic.main.partial_main.*
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
 
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity(),
     OptionalHistoryMenu.MenuOptionCallback {
     
     private val _adapter: MainPagerAdapter by lazy {
-        MainPagerAdapter(supportFragmentManager, imageViewOption, this).apply {
+        MainPagerAdapter(supportFragmentManager, imageViewOptionHistory, this).apply {
             addFragment(GuidelineFragment.newInstance(), getString(R.string.label_help))
             addFragment(HeartbeatFragment.newInstance(this), getString(R.string.label_measure))
             addFragment(HistoryFragment.newInstance(), getString(R.string.label_history))
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity(),
     }
     
     private fun initListener() {
-       assignViews(imageViewOption)
+        assignViews(imageViewOptionHistory,imageViewOption)
     }
     
     private fun initSplashView() {
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity(),
             tabLayoutMain?.setupWithViewPager(this)
         }
         viewPagerMain?.addOnPageChangeListener(OnPageChangeListener {
-            displayImageViewOption(imageViewOption)
+            displayImageViewOption(imageViewOptionHistory)
         })
     }
     
@@ -97,12 +101,15 @@ class MainActivity : AppCompatActivity(),
         onMenuOptionCallBack?.menuOptionCallBack(value)
     }
     
+    @SuppressLint("RtlHardcoded")
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.imageViewOption -> OptionalHistoryMenu(
+            R.id.imageViewOptionHistory -> OptionalHistoryMenu(
                 this
-            ).optionalHistoryMenu(this, imageViewOption)
-            
+            ).optionalHistoryMenu(this, imageViewOptionHistory)
+            R.id.imageViewOption -> {
+                drawerLayout.openDrawer(Gravity.LEFT)
+            }
         }
     }
     
