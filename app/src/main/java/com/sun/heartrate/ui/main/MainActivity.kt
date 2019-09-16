@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
 
 class MainActivity : AppCompatActivity() {
+    
     private val _adapter: MainPagerAdapter by lazy {
         MainPagerAdapter(supportFragmentManager).apply {
             addFragment(GuidelineFragment.newInstance(), getString(R.string.label_help))
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initSplashView()
         initViewPager()
-        
     }
     
     private fun initSplashView() {

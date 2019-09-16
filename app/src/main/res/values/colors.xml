@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#d4001c</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhile">#ffffff</color>
-    <color name="colorWhileDark">#797979</color>
+    <color name="colorWhileDark">#CCCCCC</color>
+    <color name="colorDark">#797979</color>
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#f53935</color>
 </resources>

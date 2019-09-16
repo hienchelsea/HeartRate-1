@@ -16,14 +16,14 @@ object HandlingTheResult {
     private var beatsIndex = 0
     private var averageIndex = 0
     
-    fun handleResultImage(currentRolling: Int): Int {
+    fun handleResultImage(currentRolling: Int, timeStart: Long): Int {
         beats = amplitudeVaries(currentRolling, beats)
         rollingAverage[averageIndex] = currentRolling
         averageIndex++
         if (averageIndex == HeartbeatPresenter.SIZE_AVERAGE_INDEX) {
             averageIndex = 0
         }
-        val heartAvg = averageHeartRateCurrent()
+        val heartAvg = averageHeartRateCurrent(timeStart)
         return if (heartAvg > 0) heartAvg else 0
     }
     
@@ -56,7 +56,11 @@ object HandlingTheResult {
         return beatsCurrent
     }
     
-    private fun averageHeartRateCurrent(): Int {
+    private fun averageHeartRateCurrent(startCameraTime: Long): Int {
+        if (((System.currentTimeMillis() - startCameraTime).toDouble() / 1000) <= 10) {
+            firstResults = 0
+            startTime = startCameraTime
+        }
         val totalTimeInSecs = (System.currentTimeMillis() - startTime).toDouble() / 1000
         val timeWait = if (firstResults == 0) 10 else 5
         if (totalTimeInSecs >= timeWait) {

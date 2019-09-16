@@ -21,5 +21,4 @@ class MainPagerAdapter(
         fragments.add(fragment)
         titles.add(title)
     }
-    
 }
