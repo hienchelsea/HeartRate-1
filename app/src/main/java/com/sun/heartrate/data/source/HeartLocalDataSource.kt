@@ -5,6 +5,7 @@ import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.asynctask.AllHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.MonthlyHeartAsyncTask
+import com.sun.heartrate.data.source.asynctask.SaveHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.StatusHeartAsyncTask
 
 class HeartLocalDataSource(
@@ -14,7 +15,7 @@ class HeartLocalDataSource(
         heartModel: HeartModel,
         onDataLoadedCallback: OnDataLoadedCallback<Boolean>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        SaveHeartAsyncTask(heartModel,heartDatabase,onDataLoadedCallback).execute()
     }
     
     override fun deleteHeart(
