@@ -3,7 +3,7 @@ package com.sun.heartrate.ui.heartbeat
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.camera2.*
+import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +16,21 @@ import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.repository.HeartRepository
 import com.sun.heartrate.data.source.HeartLocalDataSource
 import com.sun.heartrate.ui.heartbeat.camera.CameraHelper
+import com.sun.heartrate.ui.saveheartbeat.SaveHeartbeatFragment
 import com.sun.heartrate.utils.CountDownProgressBar
 import com.sun.heartrate.utils.createProgressPercent
+import com.sun.heartrate.utils.formatDate
+import com.sun.heartrate.utils.formatDecimal
 import kotlinx.android.synthetic.main.fragment_heartbeat.*
 import java.text.DecimalFormat
 
-class HeartbeatFragment : Fragment(),
+class HeartbeatFragment(
+    private val onLoadFragment: OnLoadFragment
+) : Fragment(),
     HeartbeatContract.View,
     View.OnClickListener,
-    CameraHelper.OnDataLoadImageCallback {
+    CameraHelper.OnDataLoadImageCallback,
+    SaveHeartbeatFragment.OnBackHeartbeatFragment {
     
     private val heartbeatPresenter: HeartbeatContract.Presenter by lazy {
         HeartbeatPresenter(this)
@@ -58,8 +64,8 @@ class HeartbeatFragment : Fragment(),
         )
     }
     
-    private val formatRateNumber = DecimalFormat("#000")
     private var cameraBootTime = 0L
+    private var rateNumber = 0L
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,10 +143,12 @@ class HeartbeatFragment : Fragment(),
     
     private fun updateProgressBar(progressPercent: Int) {
         progressBarTime?.progress = progressPercent
+        nextToSaveHeartBeatFragment(progressPercent, rateNumber.toInt())
     }
     
     override fun displayHeatRate(rateNumber: Int) {
-        textRateNumber?.text = formatRateNumber.format(rateNumber.toLong())
+        textRateNumber?.text = rateNumber.formatDecimal()
+        this.rateNumber = rateNumber.toLong()
     }
     
     private fun displayImageViewHeart(isRecording: Boolean) {
@@ -172,6 +180,17 @@ class HeartbeatFragment : Fragment(),
             isRecording() -> closeCamera()
             else -> openCamera()
         }
+        
+    }
+    
+    private fun nextToSaveHeartBeatFragment(progressPercent: Int, numberRate: Int) {
+        if (progressPercent > PERCENT_NEXT_FRAGMENT)
+            onLoadFragment.nextFragment(
+                SaveHeartbeatFragment.newInstance(this,
+                    numberRate,
+                    System.currentTimeMillis().formatDate()
+                )
+            )
     }
     
     private fun hasCameraPermissions() = context?.let {
@@ -181,16 +200,27 @@ class HeartbeatFragment : Fragment(),
     private fun getCurrentCameraPermission(context: Context) =
         ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
     
+    override fun backFragment() {
+        onLoadFragment.backFragment()
+    }
+    
     override fun onPause() {
         super.onPause()
         if (isRecording()) closeCamera()
     }
     
     companion object {
-        @JvmStatic
-        fun newInstance() = HeartbeatFragment()
         
         const val CODE_PERMISSION_CAMERA = 200
         const val MEASUREMENT_TIME = 26000L
+        const val PERCENT_NEXT_FRAGMENT = 97
+        
+        @JvmStatic
+        fun newInstance(onLoadFragment: OnLoadFragment) = HeartbeatFragment(onLoadFragment)
+    }
+    
+    interface OnLoadFragment {
+        fun nextFragment(fragment: Fragment)
+        fun backFragment()
     }
 }

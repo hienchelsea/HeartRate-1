@@ -1,14 +1,11 @@
 package com.sun.heartrate.data.source
 
-import android.media.Image
 import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.asynctask.AllHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.MonthlyHeartAsyncTask
 import com.sun.heartrate.data.source.asynctask.StatusHeartAsyncTask
-import com.sun.heartrate.utils.ImageProcessingHelper
-import java.nio.ByteBuffer
 
 class HeartLocalDataSource(
     private val heartDatabase: HeartDatabase

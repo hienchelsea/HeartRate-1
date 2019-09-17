@@ -34,7 +34,7 @@ class CameraHelper(
     
     private lateinit var cameraDevice: CameraDevice
     private var timeStart = 0L
-    private var isCheckCamera: Boolean = false
+    private var isCheckCamera = false
     
     @SuppressLint("MissingPermission")
     fun openCamera() {
