@@ -1,5 +1,6 @@
 package com.sun.heartrate.data.source
 
+import com.sun.heartrate.data.database.SharedPreferencesUtils
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 
@@ -25,4 +26,15 @@ interface HeartDataSource {
         image: Int,
         onDataLoadedCallback: OnDataLoadedCallback<List<HeartModel>>
     )
+    
+    fun setStringLanguage(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key: String,
+        value: String
+    )
+    
+    fun getStringLanguage(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key: String
+    ): String
 }

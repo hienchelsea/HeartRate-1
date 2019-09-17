@@ -41,11 +41,13 @@
         android:layout_height="56dp"
         android:gravity="center">
         <Button
+            android:id="@+id/buttonOk"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_56"
             android:text="@string/title_ok"
             tools:ignore="ButtonStyle" />
         <Button
+            android:id="@+id/buttonCancel"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_56"
             android:text="@string/title_cancel"

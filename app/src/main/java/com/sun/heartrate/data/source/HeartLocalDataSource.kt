@@ -1,6 +1,7 @@
 package com.sun.heartrate.data.source
 
 import com.sun.heartrate.data.database.HeartDatabase
+import com.sun.heartrate.data.database.SharedPreferencesUtils
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 import com.sun.heartrate.data.source.asynctask.*
@@ -50,4 +51,19 @@ class HeartLocalDataSource(
             onDataLoadedCallback
         ).execute()
     }
+    
+    override fun setStringLanguage(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String,
+        value: String
+    ){
+        sharedPreferencesUtils.setString(key,value)
+    }
+    
+    override fun getStringLanguage(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String
+    )=sharedPreferencesUtils.getString(key)
+    
+    
 }

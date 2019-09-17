@@ -10,7 +10,7 @@
         android:id="@+id/textLast"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
-        android:text="Lan do gan nhat"
+        android:text="@string/title_the_latest_measurement"
         android:gravity="start|center"
         android:textColor="@color/colorBlack"/>
         <include

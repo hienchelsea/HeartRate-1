@@ -1,17 +1,22 @@
 package com.sun.heartrate.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
+import com.sun.heartrate.data.database.HeartDatabase
+import com.sun.heartrate.data.database.SharedPreferencesUtils
+import com.sun.heartrate.data.repository.HeartRepository
+import com.sun.heartrate.data.source.HeartLocalDataSource
 import com.sun.heartrate.ui.guideline.GuidelineFragment
 import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
 import com.sun.heartrate.ui.history.HistoryFragment
+import com.sun.heartrate.utils.Constant
 import com.sun.heartrate.utils.animator.AlphaAnimator
 import com.sun.heartrate.utils.animator.CountDownAnimation
 import com.sun.heartrate.utils.assignViews
@@ -20,11 +25,15 @@ import com.sun.heartrate.utils.show
 import kotlinx.android.synthetic.main.partial_main.*
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
+import java.util.*
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(),
     MainPagerAdapter.OnLoadCallback,
     View.OnClickListener,
-    OptionalHistoryMenu.MenuOptionCallback {
+    OptionalHistoryMenu.MenuOptionCallback,
+    LanguageDialog.LanguageDialogCallback,
+    MainContract.View {
     
     private val _adapter: MainPagerAdapter by lazy {
         MainPagerAdapter(supportFragmentManager, imageViewOptionHistory, this).apply {
@@ -34,10 +43,28 @@ class MainActivity : AppCompatActivity(),
         }
     }
     
+    private val heartDatabase: HeartDatabase by lazy {
+        HeartDatabase(applicationContext)
+    }
+    
+    private val heartLocalDataSource: HeartLocalDataSource by lazy {
+        HeartLocalDataSource(heartDatabase)
+    }
+    
+    private val heartRepository: HeartRepository by lazy {
+        HeartRepository(heartLocalDataSource)
+    }
+    private val sharedPreferencesUtils: SharedPreferencesUtils by lazy {
+        SharedPreferencesUtils(applicationContext)
+    }
+    private val mainPresenter: MainContract.Presenter by lazy {
+        MainPresenter(heartRepository, sharedPreferencesUtils, this)
+    }
     private var onMenuOptionCallBack: OnMenuOptionCallBack? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setLanguage(mainPresenter.getLanguage(Constant.LANGUAGE))
         initSplashView()
         initViewPager()
         initListener()
@@ -51,7 +78,7 @@ class MainActivity : AppCompatActivity(),
     }
     
     private fun initListener() {
-        assignViews(imageViewOptionHistory,imageViewOption,textViewLanguage)
+        assignViews(imageViewOptionHistory, imageViewOption, textViewLanguage)
     }
     
     private fun initSplashView() {
@@ -89,6 +116,32 @@ class MainActivity : AppCompatActivity(),
         else view.gone()
     }
     
+    @SuppressLint("ObsoleteSdkInt")
+    override fun onChangeLanguage(language: String) {
+        mainPresenter.setLanguage(Constant.LANGUAGE, language)
+        resetActivity()
+        
+    }
+    
+    private fun resetActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    
+    private fun setLanguage(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val configuration = resources.configuration
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale)
+        } else {
+            configuration.locale = locale
+        }
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+    }
+    
+    
     private fun nextFragment(fragment: Fragment, id: Int) {
         val backStateName = MainActivity::class.java.canonicalName as String
         val transaction = supportFragmentManager.beginTransaction()
@@ -111,7 +164,7 @@ class MainActivity : AppCompatActivity(),
             R.id.imageViewOption -> {
                 drawerLayout.openDrawer(Gravity.LEFT)
             }
-            R.id.textViewLanguage-> LanguageDialog().languageDialog(this)
+            R.id.textViewLanguage -> LanguageDialog(this).languageDialog(this)
         }
     }
     

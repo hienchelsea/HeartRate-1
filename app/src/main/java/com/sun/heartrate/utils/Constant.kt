@@ -7,5 +7,6 @@ object Constant {
     const val RESTED = "Rested"
     const val GENERAL = "General"
     const val SHOW_ALL = "Show_all"
+    const val LANGUAGE = "language"
     const val NULL = ""
 }

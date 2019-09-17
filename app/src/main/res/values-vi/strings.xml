@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Heart Rate</string>
+    <string name="label_help">Hướng dẫn</string>
+    <string name="label_history">Lịch Sử</string>
+    <string name="label_measure">Đo</string>
+    <string name="label_pause">Dừng</string>
+    <string name="label_save">Lưu</string>
+    <string name="label_start">Bắt đầu</string>
+    <string name="text_rate_original">00</string>
+    <string name="text_save_heart">Chi tiết kết quả đo</string>
+    <string name="text_vision">Phiên bản 0.0.1</string>
+    <string name="title_add_data_failed">Thêm dữ liệu không thành công</string>
+    <string name="title_add_data_successfully">Thêm dữ liệu thành công</string>
+    <string name="title_after_training">Sau luyện tập</string>
+    <string name="title_app_review">Đánh giá ứng dụng</string>
+    <string name="title_before_training">Trước luyện tập</string>
+    <string name="title_cancel">Hủy</string>
+    <string name="title_choose_the_language">Thay đổi ngôn ngữ</string>
+    <string name="title_delete">Xóa</string>
+    <string name="title_delete_ask">Bạn có muốn xóa ghi nhớ này?</string>
+    <string name="title_english">Tiếng anh</string>
+    <string name="title_general">Chunh</string>
+    <string name="title_guideline">Vui lòng đọc kỹ trước khi sử dụng \\ n \\ n * Mở ứng dụng và giữ ngón tay trỏ của bạn để che ống kính và đèn flash của máy ảnh. \\ n * Không giữ quá chặt hoặc nó sẽ khiến máy không chảy dẫn đến kết quả không chính xác. \\ n * Sau 10 giây sẽ có kết quả của thời gian đó, đợi 15 giây tiếp theo để có kết quả đo cuối cùng</string>
+    <string name="title_guideline_note">Lưu ý: Đây không phải là một sản phẩm y tế. Thông tin tính toán chỉ mang tính tham khảo cho sức khỏe cá nhân</string>
+    <string name="title_heavy_training">Luyện tập nặng</string>
+    <string name="title_help">Đặt ngón tay của bạn trên máy ảnh và nhấn nút bắt đầu</string>
+    <string name="title_japanese">Tiếng nhật</string>
+    <string name="title_language">Thay đổi ngôn ngữ</string>
+    <string name="title_measurement_time">Thời gian đo</string>
+    <string name="title_note">Chú ý</string>
+    <string name="title_ok">Đồng ý</string>
+    <string name="title_measuring_heart_rate">ĐANG ĐO</string>
+    <string name="title_please_put_your_hand_on_the_camera">Vui lòng đặt tay lên máy ảnh</string>
+    <string name="title_remind">Nhắc nhở khi thời gian để đo</string>
+    <string name="title_rested">Nghỉ ngơi</string>
+    <string name="title_show_all">Hiển thị tất cả</string>
+    <string name="title_status">Trạng thái</string>
+    <string name="title_the_latest_measurement">Lần đo gần nhất</string>
+    <string name="title_time_notification">08:00</string>
+    <string name="title_vietnamese">Tiếng việt</string>
+    <string name="label_bmp">BMP</string>
+</resources>
