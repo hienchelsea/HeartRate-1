@@ -22,7 +22,6 @@ import com.sun.heartrate.utils.createProgressPercent
 import com.sun.heartrate.utils.formatDate
 import com.sun.heartrate.utils.formatDecimal
 import kotlinx.android.synthetic.main.fragment_heartbeat.*
-import java.text.DecimalFormat
 
 class HeartbeatFragment(
     private val onLoadFragment: OnLoadFragment
@@ -180,7 +179,6 @@ class HeartbeatFragment(
             isRecording() -> closeCamera()
             else -> openCamera()
         }
-        
     }
     
     private fun nextToSaveHeartBeatFragment(progressPercent: Int, numberRate: Int) {

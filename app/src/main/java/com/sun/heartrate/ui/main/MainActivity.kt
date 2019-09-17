@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(),
     }
     
     private fun nextFragment(fragment: Fragment, id: Int) {
+        
         val backStateName = MainActivity::class.java.canonicalName as String
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(0, 0, 0, 0)
