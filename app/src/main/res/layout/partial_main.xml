@@ -8,6 +8,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <include
+        layout="@layout/partial_tab_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -130,6 +135,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <TextView
+                android:id="@+id/textViewLanguage"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_56"
                 android:layout_marginTop="@dimen/dp_16"
@@ -160,8 +166,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.navigation.NavigationView>
 
-    <include
-        layout="@layout/partial_tab_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </androidx.drawerlayout.widget.DrawerLayout>

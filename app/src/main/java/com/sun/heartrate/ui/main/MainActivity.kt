@@ -2,6 +2,7 @@ package com.sun.heartrate.ui.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity(),
     }
     
     private fun initListener() {
-        assignViews(imageViewOptionHistory,imageViewOption)
+        assignViews(imageViewOptionHistory,imageViewOption,textViewLanguage)
     }
     
     private fun initSplashView() {
@@ -110,6 +111,7 @@ class MainActivity : AppCompatActivity(),
             R.id.imageViewOption -> {
                 drawerLayout.openDrawer(Gravity.LEFT)
             }
+            R.id.textViewLanguage-> LanguageDialog().languageDialog(this)
         }
     }
     

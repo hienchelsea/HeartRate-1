@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhile"
+    android:layout_margin="@dimen/dp_16"
+    android:padding="@dimen/dp_16">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:text="@string/title_choose_the_language"
+        android:textSize="@dimen/sp_18"
+        android:gravity="center"
+        android:background="@color/colorRed"
+        android:textColor="@color/colorWhile" />
+    <RadioGroup
+        android:layout_margin="@dimen/dp_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/radioButtonVietnamese"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:text="@string/title_vietnamese"/>
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/radioButtonEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:text="@string/title_english"/>
+        <RadioButton
+            android:id="@+id/radioButtonJapanese"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:text="@string/title_japanese"/>
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center">
+        <Button
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_56"
+            android:text="@string/title_ok"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_56"
+            android:text="@string/title_cancel"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>

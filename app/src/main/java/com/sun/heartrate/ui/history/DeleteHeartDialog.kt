@@ -5,9 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.Window
 import com.sun.heartrate.R
 import com.sun.heartrate.data.model.HeartModel

@@ -21,6 +21,14 @@
     <string name="title_measurement_time">Measurement time</string>
     <string name="title_remind">Remind when the time to measure</string>
     <string name="title_general">General</string>
+    <string name="title_delete_ask">Do you want to delete memo?</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_cancel">Cancel</string>
+    <string name="title_choose_the_language">Choose the language</string>
+    <string name="title_vietnamese">Vietnamese</string>
+    <string name="title_english">English</string>
+    <string name="title_japanese">Japanese</string>
+    <string name="title_ok">Ok</string>
     <string name="title_note">Note</string>
     <string name="title_status">Status</string>
     <string name="title_show_all">Show all</string>
