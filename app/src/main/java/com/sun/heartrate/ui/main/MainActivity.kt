@@ -3,6 +3,7 @@ package com.sun.heartrate.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
 import com.sun.heartrate.ui.guideline.GuidelineFragment
 import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
@@ -12,12 +13,13 @@ import com.sun.heartrate.utils.animator.CountDownAnimation
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    MainPagerAdapter.OnLoadSaveHeartFragment {
     
     private val _adapter: MainPagerAdapter by lazy {
-        MainPagerAdapter(supportFragmentManager).apply {
+        MainPagerAdapter(supportFragmentManager, this).apply {
             addFragment(GuidelineFragment.newInstance(), getString(R.string.label_help))
-            addFragment(HeartbeatFragment.newInstance(), getString(R.string.label_measure))
+            addFragment(HeartbeatFragment.newInstance(this), getString(R.string.label_measure))
             addFragment(HistoryFragment.newInstance(), getString(R.string.label_history))
         }
     }
@@ -46,6 +48,23 @@ class MainActivity : AppCompatActivity() {
             setCurrentItem(HEART_SCREEN_INDEX, true)
             tabLayoutMain?.setupWithViewPager(this)
         }
+    }
+    
+    override fun nextSaveHeartFragment(fragment: Fragment) {
+        nextFragment(fragment, R.id.relativeMain)
+    }
+    
+    override fun backFragment() {
+        onBackPressed()
+    }
+    
+    private fun nextFragment(fragment: Fragment, id: Int) {
+        val backStateName = MainActivity::class.java.canonicalName as String
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(0, 0, 0, 0)
+        transaction.replace(id, fragment)
+        transaction.addToBackStack(backStateName)
+        transaction.commit()
     }
     
     companion object {
