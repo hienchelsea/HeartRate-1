@@ -10,11 +10,15 @@ import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
 import com.sun.heartrate.ui.history.HistoryFragment
 import com.sun.heartrate.utils.animator.AlphaAnimator
 import com.sun.heartrate.utils.animator.CountDownAnimation
+import com.sun.heartrate.utils.gone
+import com.sun.heartrate.utils.show
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
 
-class MainActivity : AppCompatActivity(),
-    MainPagerAdapter.OnLoadSaveHeartFragment {
+class MainActivity :AppCompatActivity(),
+    MainPagerAdapter.OnLoadSaveHeartFragment,
+    View.OnClickListener,
+    OptionalHistoryMenu.MenuOptionCallback {
     
     private val _adapter: MainPagerAdapter by lazy {
         MainPagerAdapter(supportFragmentManager, this).apply {
@@ -24,11 +28,24 @@ class MainActivity : AppCompatActivity(),
         }
     }
     
+    private var onMenuOptionCallBack: OnMenuOptionCallBack? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initSplashView()
         initViewPager()
+        initListener()
+    }
+    
+    override fun onAttachFragment(fragment: Fragment) {
+        super.onAttachFragment(fragment)
+        if (fragment is OnMenuOptionCallBack) {
+            onMenuOptionCallBack = fragment
+        }
+    }
+    
+    private fun initListener() {
+        imageViewOption?.setOnClickListener(this)
     }
     
     private fun initSplashView() {
@@ -48,6 +65,9 @@ class MainActivity : AppCompatActivity(),
             setCurrentItem(HEART_SCREEN_INDEX, true)
             tabLayoutMain?.setupWithViewPager(this)
         }
+        viewPagerMain?.addOnPageChangeListener(OnPageChangeListener {
+            displayImageViewOption(imageViewOption)
+        })
     }
     
     override fun nextSaveHeartFragment(fragment: Fragment) {
@@ -58,8 +78,12 @@ class MainActivity : AppCompatActivity(),
         onBackPressed()
     }
     
+    private fun displayImageViewOption(view: View) {
+        if (viewPagerMain.currentItem == HISTORY_SCREEN_INDEX) view.show()
+        else view.gone()
+    }
+    
     private fun nextFragment(fragment: Fragment, id: Int) {
-        
         val backStateName = MainActivity::class.java.canonicalName as String
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(0, 0, 0, 0)
@@ -68,9 +92,27 @@ class MainActivity : AppCompatActivity(),
         transaction.commit()
     }
     
+    override fun loadMenuOptionCallback(value: String) {
+        onMenuOptionCallBack?.menuOptionCallBack(value)
+    }
+    
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.imageViewOption -> OptionalHistoryMenu(
+                this
+            ).optionalHistoryMenu(this, imageViewOption)
+            
+        }
+    }
+    
     companion object {
         const val COUNT_DOWN_INTERVAL = 2000L
         const val TIME_ANIMATION_DURATION = 600L
         const val HEART_SCREEN_INDEX = 1
+        const val HISTORY_SCREEN_INDEX = 2
+    }
+    
+    interface OnMenuOptionCallBack {
+        fun menuOptionCallBack(value: String)
     }
 }

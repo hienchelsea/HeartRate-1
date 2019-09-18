@@ -150,7 +150,7 @@ class SaveHeartbeatFragment(
     }
     
     companion object {
-
+        
         const val BEFORE_TRAINING = 1
         const val AFTER_TRAINING = 2
         const val GENERAL = 3
