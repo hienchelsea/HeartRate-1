@@ -1,11 +1,14 @@
 package com.sun.heartrate.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
@@ -16,12 +19,9 @@ import com.sun.heartrate.data.source.HeartLocalDataSource
 import com.sun.heartrate.ui.guideline.GuidelineFragment
 import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
 import com.sun.heartrate.ui.history.HistoryFragment
-import com.sun.heartrate.utils.Constant
+import com.sun.heartrate.utils.*
 import com.sun.heartrate.utils.animator.AlphaAnimator
 import com.sun.heartrate.utils.animator.CountDownAnimation
-import com.sun.heartrate.utils.assignViews
-import com.sun.heartrate.utils.gone
-import com.sun.heartrate.utils.show
 import kotlinx.android.synthetic.main.partial_main.*
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(),
     View.OnClickListener,
     OptionalHistoryMenu.MenuOptionCallback,
     LanguageDialog.LanguageDialogCallback,
+    TimePicker.TimePickerDialogCallback,
     MainContract.View {
     
     private val _adapter: MainPagerAdapter by lazy {
@@ -66,8 +67,20 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
         setLanguage(mainPresenter.getLanguage(Constant.LANGUAGE))
         initSplashView()
+        setTimeNotification()
+        initCheckBoxView()
         initViewPager()
         initListener()
+    }
+    
+    private var hour = 0
+    private var minute = 0
+    
+    @SuppressLint("ResourceAsColor")
+    private fun initCheckBoxView() {
+        checkBoxNotification.isChecked = mainPresenter.getNotification(
+            Constant.CHECK_NOTIFICATION
+        ) == true
     }
     
     override fun onAttachFragment(fragment: Fragment) {
@@ -78,7 +91,13 @@ class MainActivity : AppCompatActivity(),
     }
     
     private fun initListener() {
-        assignViews(imageViewOptionHistory, imageViewOption, textViewLanguage)
+        assignViews(
+            imageViewOptionHistory,
+            imageViewOption,
+            textViewLanguage,
+            imageViewSelectTime,
+            checkBoxNotification
+        )
     }
     
     private fun initSplashView() {
@@ -123,6 +142,12 @@ class MainActivity : AppCompatActivity(),
         
     }
     
+    override fun onChangeTimePicker(hourOfDay: Int, minute: Int) {
+        mainPresenter.setLanguage(Constant.HOUR_NOTIFICATION, hourOfDay.toString())
+        mainPresenter.setLanguage(Constant.MINUTE_NOTIFICATION, minute.toString())
+        createNotification()
+    }
+    
     private fun resetActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -161,10 +186,45 @@ class MainActivity : AppCompatActivity(),
             R.id.imageViewOptionHistory -> OptionalHistoryMenu(
                 this
             ).optionalHistoryMenu(this, imageViewOptionHistory)
-            R.id.imageViewOption -> {
-                drawerLayout.openDrawer(Gravity.LEFT)
+            R.id.imageViewOption -> drawerLayout.openDrawer(Gravity.LEFT)
+            R.id.textViewLanguage -> LanguageDialog(
+                this
+            ).languageDialog(this)
+            R.id.imageViewSelectTime -> TimePicker(
+                this
+            ).clickTimePicker(this)
+            R.id.checkBoxNotification -> {
+                mainPresenter.setNotification(
+                    Constant.CHECK_NOTIFICATION,
+                    checkBoxNotification.isChecked
+                )
+                createNotification()
             }
-            R.id.textViewLanguage -> LanguageDialog(this).languageDialog(this)
+        }
+    }
+    
+    private fun setTimeNotification() {
+        if (mainPresenter.getLanguage(Constant.HOUR_NOTIFICATION) == "en") {
+            hour = 8
+            minute = 0
+        } else {
+            hour = mainPresenter.getLanguage(Constant.HOUR_NOTIFICATION).toInt()
+            minute = mainPresenter.getLanguage(Constant.MINUTE_NOTIFICATION).toInt()
+        }
+        textViewTimeSelect.text = hour.formatDecimal()+" : "+minute.formatDecimal()
+    }
+    private fun createNotification(){
+        setTimeNotification()
+        if (checkBoxNotification.isChecked) {
+            val calendarCurrent = Calendar.getInstance()
+            calendarCurrent.apply {
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+            }
+            AlarmUtils.cancelAlarm(this, Constant.REQUEST_CODE)
+            AlarmUtils.setTurnOnRepeat(this, Constant.REQUEST_CODE, calendarCurrent.timeInMillis)
+        } else {
+            AlarmUtils.cancelAlarm(this, Constant.REQUEST_CODE)
         }
     }
     
@@ -173,6 +233,8 @@ class MainActivity : AppCompatActivity(),
         const val TIME_ANIMATION_DURATION = 600L
         const val HEART_SCREEN_INDEX = 1
         const val HISTORY_SCREEN_INDEX = 2
+        
+        fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
     
     interface OnMenuOptionCallBack {

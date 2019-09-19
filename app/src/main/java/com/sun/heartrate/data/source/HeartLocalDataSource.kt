@@ -65,5 +65,17 @@ class HeartLocalDataSource(
         key:String
     )=sharedPreferencesUtils.getString(key)
     
+    override fun setBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String,
+        value: Boolean
+    ){
+        sharedPreferencesUtils.setBoolean(key,value)
+    }
+    
+    override fun getBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String
+    )=sharedPreferencesUtils.getBoolean(key)
     
 }

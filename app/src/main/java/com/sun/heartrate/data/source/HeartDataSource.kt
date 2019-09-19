@@ -37,4 +37,15 @@ interface HeartDataSource {
         sharedPreferencesUtils: SharedPreferencesUtils,
         key: String
     ): String
+    
+    fun setBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String,
+        value: Boolean
+    )
+    
+    fun getBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key:String
+    ): Boolean?
 }

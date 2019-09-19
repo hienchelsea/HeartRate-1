@@ -6,5 +6,7 @@ interface MainContract {
     interface Presenter {
         fun setLanguage(key: String, value: String)
         fun getLanguage(key: String): String
+        fun setNotification(key: String, value: Boolean)
+        fun getNotification(key: String): Boolean?
     }
 }

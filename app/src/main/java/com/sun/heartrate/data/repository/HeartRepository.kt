@@ -54,4 +54,19 @@ class HeartRepository(
         sharedPreferencesUtils: SharedPreferencesUtils,
         key: String
     ): String = heartLocalDataSource.getStringLanguage(sharedPreferencesUtils,key)
+    
+    override fun setBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key: String,
+        value: Boolean
+    ) {
+        heartLocalDataSource.setBooleanNotification(sharedPreferencesUtils,key,value)
+    }
+    
+    override fun getBooleanNotification(
+        sharedPreferencesUtils: SharedPreferencesUtils,
+        key: String
+    ): Boolean? = heartLocalDataSource.getBooleanNotification(sharedPreferencesUtils,key)
+    
+    
 }

@@ -16,4 +16,12 @@ class MainPresenter(
         key: String
     ): String = heartRepository.getStringLanguage(sharedPreferencesUtils, key)
     
+    override fun setNotification(key: String, value: Boolean){
+        heartRepository.setBooleanNotification(sharedPreferencesUtils,key,value)
+    }
+    
+    override fun getNotification(
+        key: String
+    ): Boolean? = heartRepository.getBooleanNotification(sharedPreferencesUtils, key)
+    
 }
