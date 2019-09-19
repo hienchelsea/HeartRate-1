@@ -7,6 +7,8 @@
     <string name="label_start">Start</string>
     <string name="label_pause">Pause</string>
     <string name="label_save">Save</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_delete">Delete</string>
     <string name="text_vision">Version 0.0.1</string>
     <string name="text_rate_original">000</string>
     <string name="text_save_heart">Detailed measurement results</string>
@@ -18,9 +20,11 @@
     <string name="title_general">General</string>
     <string name="title_note">Note</string>
     <string name="title_status">Status</string>
+    <string name="title_show_all">Show all</string>
     <string name="title_help">Put your finger on the camera and press the start button</string>
     <string name="title_measuring_heart_rate">MEASURING HEART RATE</string>
     <string name="title_please_put_your_hand_on_the_camera">Please put your hand on the camera</string>
     <string name="title_add_data_successfully">Add data successfully</string>
     <string name="title_add_data_failed">Add data failed</string>
+    <string name="title_do_you_want_to_delete_this_memo">Do you want to delete this memo?</string>
 </resources>
