@@ -13,14 +13,23 @@ class OptionalHistoryMenu(
     private val menuOptionCallback: MenuOptionCallback
 ) : MenuBuilder.Callback {
     
-    fun optionalHistoryMenu(context: Context, imageView: ImageView) {
+    fun optionalHistoryMenu(context: Context, imageView: ImageView?) {
         val menuBuilder = MenuBuilder(context)
         MenuInflater(context).apply {
             inflate(R.menu.menu_optional_history, menuBuilder)
         }
-        val optionsMenu = MenuPopupHelper(context, menuBuilder, imageView)
-        optionsMenu.setForceShowIcon(false)
-        optionsMenu.show()
+        val optionsMenu = imageView?.let {
+            MenuPopupHelper(
+                context,
+                menuBuilder,
+                it
+            )
+        }
+        
+        optionsMenu?.apply {
+            setForceShowIcon(false)
+            show()
+        }
         menuBuilder.setCallback(this)
     }
     

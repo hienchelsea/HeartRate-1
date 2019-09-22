@@ -28,4 +28,5 @@
     <include
         android:id="@+id/includePartialFragmentHistory"
         layout="@layout/partial_fragment_history" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,12 +10,13 @@ import com.sun.heartrate.ui.heartbeat.HeartbeatFragment
 import com.sun.heartrate.ui.history.HistoryFragment
 import com.sun.heartrate.utils.animator.AlphaAnimator
 import com.sun.heartrate.utils.animator.CountDownAnimation
+import com.sun.heartrate.utils.assignViews
 import com.sun.heartrate.utils.gone
 import com.sun.heartrate.utils.show
 import kotlinx.android.synthetic.main.partial_splash.*
 import kotlinx.android.synthetic.main.partial_tab_pager.*
 
-class MainActivity :AppCompatActivity(),
+class MainActivity : AppCompatActivity(),
     MainPagerAdapter.OnLoadSaveHeartFragment,
     View.OnClickListener,
     OptionalHistoryMenu.MenuOptionCallback {
@@ -45,7 +46,7 @@ class MainActivity :AppCompatActivity(),
     }
     
     private fun initListener() {
-        imageViewOption?.setOnClickListener(this)
+        assignViews(imageViewOption)
     }
     
     private fun initSplashView() {
@@ -78,18 +79,20 @@ class MainActivity :AppCompatActivity(),
         onBackPressed()
     }
     
-    private fun displayImageViewOption(view: View) {
-        if (viewPagerMain.currentItem == HISTORY_SCREEN_INDEX) view.show()
-        else view.gone()
+    private fun displayImageViewOption(view: View?) {
+        if (viewPagerMain.currentItem == HISTORY_SCREEN_INDEX) view?.show()
+        else view?.gone()
     }
     
     private fun nextFragment(fragment: Fragment, id: Int) {
         val backStateName = MainActivity::class.java.canonicalName as String
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(0, 0, 0, 0)
-        transaction.replace(id, fragment)
-        transaction.addToBackStack(backStateName)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            setCustomAnimations(0, 0, 0, 0)
+            replace(id, fragment)
+            addToBackStack(backStateName)
+            commit()
+        }
+        
     }
     
     override fun loadMenuOptionCallback(value: String) {
