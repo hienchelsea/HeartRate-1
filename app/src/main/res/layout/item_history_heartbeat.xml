@@ -79,5 +79,4 @@
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/sp_14" />
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

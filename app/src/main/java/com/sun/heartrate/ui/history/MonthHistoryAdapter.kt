@@ -7,69 +7,111 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sun.heartrate.R
 import com.sun.heartrate.data.model.HeartModel
-import com.sun.heartrate.utils.gone
-import com.sun.heartrate.utils.show
+import com.sun.heartrate.utils.Constant
+import com.sun.heartrate.utils.assignViews
 import kotlinx.android.synthetic.main.item_month.view.*
 
 class MonthHistoryAdapter(
-    private val heartMonths: MutableList<HeartModel>
-) : RecyclerView.Adapter<MonthHistoryAdapter.ViewHolder>() {
+    private val heartMonths: MutableList<String>,
+    private val onItemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<MonthHistoryAdapter.ViewHolder>(),
+    DetailHistoryAdapter.OnItemClickListener {
     
-    override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    lateinit var holder: ViewHolder
+    private val viewPool = RecyclerView.RecycledViewPool()
+    
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(
             viewGroup.context
         ).inflate(R.layout.item_month, viewGroup, false)
-        return ViewHolder(itemView)
+        return ViewHolder(
+            itemView,
+            onItemClickListener,
+            this,
+            viewPool
+        )
     }
     
     override fun getItemCount() = heartMonths.size
     
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindData(heartMonths[position])
+        this.holder = holder
     }
     
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        
-        private lateinit var item: HeartModel
-        private var hearts = mutableListOf<HeartModel>()
-        
-        private val detailHistoryFragment: DetailHistoryAdapter by lazy {
-            DetailHistoryAdapter(hearts)
+    fun getHeartByMonth(itemView: View?, hearts: List<HeartModel>) {
+        holder.setDetailHistoryAdapter(itemView, hearts)
+    }
+    
+    fun updateHeart(hearts: List<HeartModel>) {
+        holder.updateHistoryAdapter(hearts)
+    }
+    
+    override fun onDeleteHeart(heartModel: HeartModel, itemView: View) {
+        onItemClickListener.loadDeleteHeartMonthDetail(heartModel)
+    }
+    
+    class ViewHolder(
+        itemView: View,
+        private val onItemClickListener: OnItemClickListener,
+        private val onItemClickListenerDetailHistoryAdapter: DetailHistoryAdapter.OnItemClickListener,
+        private val viewPool: RecyclerView.RecycledViewPool
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private var item: String? = null
+        private val detailHistoryAdapter: DetailHistoryAdapter by lazy {
+            DetailHistoryAdapter(
+                listOf(),
+                onItemClickListenerDetailHistoryAdapter
+            )
         }
         
         init {
-            itemView.cardViewMonth.setOnClickListener(this)
+            assignViews(itemView.cardViewMonth)
+            itemView.apply {
+                recyclerDetail?.run {
+                    layoutManager = StaggeredGridLayoutManager(
+                        Constant.SPAN_COUNT,
+                        StaggeredGridLayoutManager.VERTICAL
+                    )
+                    setHasFixedSize(true)
+                    setRecycledViewPool(viewPool)
+                    adapter = detailHistoryAdapter
+                }
+            }
         }
         
         override fun onClick(view: View?) {
             if (view?.id == R.id.cardViewMonth) {
-                itemView.recyclerDetail.run {
-                    layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-                    setHasFixedSize(true)
-                    adapter = detailHistoryFragment
-                }
-                setVisibilityUi(itemView)
+                item?.let { onItemClickListener.loadHeartMonthDetail(it, itemView) }
             }
         }
         
-        fun bindData(heartModel: HeartModel) {
+        fun bindData(heartModel: String) {
             item = heartModel
-            itemView.textViewMonth?.text = item.monthYear
+            itemView.textViewMonth.text = item
         }
         
-        private fun setVisibilityUi(itemView: View?) {
+        fun setDetailHistoryAdapter(itemView: View?, hearts: List<HeartModel>) {
+            detailHistoryAdapter.updateAdapter(hearts)
             itemView?.apply {
-                if (recyclerDetail?.visibility == View.GONE) {
-                    imageView.setImageResource(R.drawable.ic_down)
-                    recyclerDetail?.show()
-                } else {
-                    imageView.setImageResource(R.drawable.ic_next)
-                    recyclerDetail?.gone()
-                }
+                recyclerDetail.adapter = detailHistoryAdapter
+                setVisibilityUi(this)
             }
         }
+        
+        fun updateHistoryAdapter(hearts: List<HeartModel>) {
+            detailHistoryAdapter.updateAdapter(hearts)
+        }
+        
+        private fun setVisibilityUi(itemView: View) {
+            if (itemView.recyclerDetail.visibility == View.GONE)
+                itemView.recyclerDetail.visibility = View.VISIBLE
+            else itemView.recyclerDetail.visibility = View.GONE
+        }
+    }
+    
+    interface OnItemClickListener {
+        fun loadHeartMonthDetail(month: String, itemView: View?)
+        fun loadDeleteHeartMonthDetail(heartModel: HeartModel)
     }
 }

@@ -29,15 +29,15 @@ class HeartbeatPresenter(
                     }
                     else -> {
                         displayGuideline(R.string.title_measuring_heart_rate)
-                        calculateTheResultOfHeartRate(currentRolling,timeStart)
+                        calculateTheResultOfHeartRate(currentRolling, timeStart)
                     }
                 }
             }
         }
     }
     
-    private fun calculateTheResultOfHeartRate(currentRolling: Int,timeStart: Long) {
-        val heartAvg = HandlingTheResult.handleResultImage(currentRolling,timeStart)
+    private fun calculateTheResultOfHeartRate(currentRolling: Int, timeStart: Long) {
+        val heartAvg = HandlingTheResult.handleResultImage(currentRolling, timeStart)
         if (heartAvg > 0) view.displayHeatRate(heartAvg)
     }
     

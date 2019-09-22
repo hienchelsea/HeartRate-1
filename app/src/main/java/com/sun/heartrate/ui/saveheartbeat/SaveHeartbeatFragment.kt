@@ -25,6 +25,7 @@ class SaveHeartbeatFragment(
     
     private var isStatusLast = GENERAL
     private var imageId = R.drawable.ic_general_red
+    
     private val heartModel: HeartModel by lazy {
         HeartModel(
             ID,

@@ -187,6 +187,7 @@ class HeartbeatFragment(
                 SaveHeartbeatFragment.newInstance(this,
                     numberRate,
                     System.currentTimeMillis().formatDate()
+                
                 )
             )
     }

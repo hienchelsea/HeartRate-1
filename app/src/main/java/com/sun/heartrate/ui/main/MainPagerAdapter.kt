@@ -34,7 +34,6 @@ class MainPagerAdapter(
     }
     
     interface OnLoadSaveHeartFragment {
-
         fun nextSaveHeartFragment(fragment: Fragment)
         fun backFragment()
     }
