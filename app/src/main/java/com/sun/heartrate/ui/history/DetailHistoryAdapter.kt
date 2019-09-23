@@ -27,7 +27,7 @@ class DetailHistoryAdapter(
     override fun getItemCount() = heartMonths.size
     
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(heartMonths[position])
+        holder.bindData(heartMonths[position], heartMonths)
     }
     
     fun updateAdapter(heartMonths: List<HeartModel>) {
@@ -45,13 +45,15 @@ class DetailHistoryAdapter(
     ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         
         private lateinit var item: HeartModel
+        private lateinit var heartMonths: List<HeartModel>
         
         init {
             assignViews(itemView.imageViewDelete)
         }
         
-        fun bindData(heartModel: HeartModel) {
+        fun bindData(heartModel: HeartModel, heartMonths: List<HeartModel>) {
             item = heartModel
+            this.heartMonths = heartMonths
             itemView.apply {
                 textViewNumberRate?.text = item.heartRate.toString()
                 textViewDate?.text = item.time.formatDate()
@@ -62,7 +64,7 @@ class DetailHistoryAdapter(
         
         override fun onClick(view: View?) {
             if (view?.id == R.id.imageViewDelete) {
-                onItemClickListener.onDeleteHeart(item, itemView)
+                onItemClickListener.onDeleteHeart(item, heartMonths, itemView)
             }
         }
     }
@@ -83,6 +85,6 @@ class DetailHistoryAdapter(
     }
     
     interface OnItemClickListener {
-        fun onDeleteHeart(heartModel: HeartModel, itemView: View)
+        fun onDeleteHeart(heartModel: HeartModel, heartMonths: List<HeartModel>, itemView: View)
     }
 }

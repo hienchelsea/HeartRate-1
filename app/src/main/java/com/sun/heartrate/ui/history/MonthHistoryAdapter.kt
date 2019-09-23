@@ -12,7 +12,7 @@ import com.sun.heartrate.utils.assignViews
 import kotlinx.android.synthetic.main.item_month.view.*
 
 class MonthHistoryAdapter(
-    private val heartMonths: MutableList<String>,
+    private var heartMonths: MutableList<String>,
     private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<MonthHistoryAdapter.ViewHolder>(),
     DetailHistoryAdapter.OnItemClickListener {
@@ -43,12 +43,21 @@ class MonthHistoryAdapter(
         holder.setDetailHistoryAdapter(itemView, hearts)
     }
     
-    fun updateHeart(hearts: List<HeartModel>) {
-        holder.updateHistoryAdapter(hearts)
+    fun updateDetailHeart(hearts: List<HeartModel>) {
+        holder.updateHistoryDetailAdapter(hearts)
     }
     
-    override fun onDeleteHeart(heartModel: HeartModel, itemView: View) {
-        onItemClickListener.loadDeleteHeartMonthDetail(heartModel)
+    fun updateAdapter(heartMonths: MutableList<String>) {
+        this.heartMonths = heartMonths
+        notifyDataSetChanged()
+    }
+    
+    override fun onDeleteHeart(
+        heartModel: HeartModel,
+        heartMonths: List<HeartModel>,
+        itemView: View
+    ) {
+        onItemClickListener.onDeleteHeartMonthDetail(heartModel, heartMonths)
     }
     
     class ViewHolder(
@@ -95,15 +104,15 @@ class MonthHistoryAdapter(
             detailHistoryAdapter.updateAdapter(hearts)
             itemView?.apply {
                 recyclerDetail.adapter = detailHistoryAdapter
-                setVisibilityUi(this)
+                showViewRecyclerDetail(this)
             }
         }
         
-        fun updateHistoryAdapter(hearts: List<HeartModel>) {
+        fun updateHistoryDetailAdapter(hearts: List<HeartModel>) {
             detailHistoryAdapter.updateAdapter(hearts)
         }
         
-        private fun setVisibilityUi(itemView: View) {
+        private fun showViewRecyclerDetail(itemView: View) {
             if (itemView.recyclerDetail.visibility == View.GONE)
                 itemView.recyclerDetail.visibility = View.VISIBLE
             else itemView.recyclerDetail.visibility = View.GONE
@@ -111,7 +120,7 @@ class MonthHistoryAdapter(
     }
     
     interface OnItemClickListener {
-        fun loadHeartMonthDetail(month: String, itemView: View?)
-        fun loadDeleteHeartMonthDetail(heartModel: HeartModel)
+        fun loadHeartMonthDetail(month: String, itemView: View)
+        fun onDeleteHeartMonthDetail(heartModel: HeartModel, heartMonths: List<HeartModel>)
     }
 }

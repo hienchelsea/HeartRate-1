@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sun.heartrate.R
@@ -123,11 +124,26 @@ class SaveHeartbeatFragment(
     
     private fun selectStatus(isStatusCurrent: Int, isStatusLast: Int) {
         when (isStatusCurrent) {
-            BEFORE_TRAINING -> setImageStatus(R.drawable.ic_before_training_red)
-            AFTER_TRAINING -> setImageStatus(R.drawable.ic_after_training_red)
-            GENERAL -> setImageStatus(R.drawable.ic_general_red)
-            HEAVY_TRAINING -> setImageStatus(R.drawable.ic_heavy_training_red)
-            RESTED -> setImageStatus(R.drawable.ic_rested_red)
+            BEFORE_TRAINING -> setImageStatus(
+                R.drawable.ic_before_training_red,
+                imageViewBeforeTraining
+            )
+            AFTER_TRAINING -> setImageStatus(
+                R.drawable.ic_after_training_red,
+                imageViewAfterTraining
+            )
+            GENERAL -> setImageStatus(
+                R.drawable.ic_general_red,
+                imageViewGeneral
+            )
+            HEAVY_TRAINING -> setImageStatus(
+                R.drawable.ic_heavy_training_red,
+                imageViewHeavyTraining
+            )
+            RESTED -> setImageStatus(
+                R.drawable.ic_rested_red,
+                imageViewRested
+            )
         }
         
         when (isStatusLast) {
@@ -145,9 +161,9 @@ class SaveHeartbeatFragment(
         this.isStatusLast = isStatusCurrent
     }
     
-    private fun setImageStatus(imageId: Int) {
-        imageViewBeforeTraining.setImageResource(imageId)
-        this.imageId = imageId
+    private fun setImageStatus(idImage: Int, image: ImageView) {
+        image.setImageResource(idImage)
+        this.imageId = idImage
     }
     
     companion object {
@@ -166,12 +182,12 @@ class SaveHeartbeatFragment(
         @JvmStatic
         fun newInstance(
             onBackPressed: OnBackHeartbeatFragment,
-            numberRate: Int, measurementTime: String
+            numberRate: Int, measurementTime: Long
         ): SaveHeartbeatFragment {
             return SaveHeartbeatFragment(onBackPressed).apply {
                 arguments = Bundle().apply {
                     putInt(NUMBER_RATE, numberRate)
-                    putString(MEASUREMENT_TIME, measurementTime)
+                    putLong(MEASUREMENT_TIME, measurementTime)
                 }
             }
         }

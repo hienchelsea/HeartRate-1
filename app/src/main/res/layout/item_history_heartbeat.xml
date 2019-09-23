@@ -38,7 +38,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     tools:ignore="UseCompoundDrawables">
-
                     <TextView
                         android:id="@+id/textViewNumberRate"
                         android:layout_width="0dp"

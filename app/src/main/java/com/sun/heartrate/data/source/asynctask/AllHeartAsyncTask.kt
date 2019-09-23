@@ -7,7 +7,7 @@ import com.sun.heartrate.data.model.OnDataLoadedCallback
 class AllHeartAsyncTask(
     private val heartDatabase: HeartDatabase,
     callback: OnDataLoadedCallback<List<HeartModel>>
-) : HeartTask(callback) {
+) : HeartTask<List<HeartModel>>(callback) {
     
     override fun getData() = heartDatabase.getAllHeart()
 }

@@ -1,18 +1,17 @@
 package com.sun.heartrate.data.source.asynctask
 
 import android.os.AsyncTask
-import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 
-abstract class HeartTask(
-    private val callback: OnDataLoadedCallback<List<HeartModel>>
-) : AsyncTask<Any?, Any?, List<HeartModel>>() {
+abstract class HeartTask<T>(
+    private val callback: OnDataLoadedCallback<T>
+) : AsyncTask<Any?, Any?, T>() {
     
     private var exception: Exception? = null
     
-    abstract fun getData(): List<HeartModel>
+    abstract fun getData(): T
     
-    override fun doInBackground(vararg p0: Any?): List<HeartModel>? =
+    override fun doInBackground(vararg p0: Any?): T? =
         try {
             getData()
         } catch (exception: Exception) {
@@ -20,7 +19,7 @@ abstract class HeartTask(
             null
         }
     
-    override fun onPostExecute(result: List<HeartModel>?) {
+    override fun onPostExecute(result: T?) {
         result?.let { callback.onDataLoaded(it) }
             ?: exception?.let { callback.onDataNotAvailable(it) }
     }

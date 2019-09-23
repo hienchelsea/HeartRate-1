@@ -5,10 +5,10 @@ import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 
 class StatusHeartAsyncTask(
-    private val value: String,
+    private val value: Int,
     private val heartDatabase: HeartDatabase,
     callback: OnDataLoadedCallback<List<HeartModel>>
-) : HeartTask(callback) {
+) : HeartTask<List<HeartModel>>(callback) {
     
-    override fun getData() = heartDatabase.getHeartByStatus(value.toInt())
+    override fun getData() = heartDatabase.getHeartByStatus(value)
 }

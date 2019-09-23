@@ -44,4 +44,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_56"
         android:visibility="visible" />
+
 </androidx.cardview.widget.CardView>

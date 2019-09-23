@@ -4,11 +4,11 @@ import com.sun.heartrate.data.database.HeartDatabase
 import com.sun.heartrate.data.model.HeartModel
 import com.sun.heartrate.data.model.OnDataLoadedCallback
 
-class SaveHeartAsyncTask(
+class DeleteHeartAsyncTask(
     private val heartModel: HeartModel,
     private val heartDatabase: HeartDatabase,
     callback: OnDataLoadedCallback<Boolean>
 ) : HeartTask<Boolean>(callback) {
     
-    override fun getData(): Boolean = heartDatabase.insertHeart(heartModel)
+    override fun getData(): Boolean = heartDatabase.deleteHeart(heartModel)
 }

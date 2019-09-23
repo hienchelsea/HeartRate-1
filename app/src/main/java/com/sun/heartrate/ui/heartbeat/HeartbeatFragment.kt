@@ -19,7 +19,6 @@ import com.sun.heartrate.ui.heartbeat.camera.CameraHelper
 import com.sun.heartrate.ui.saveheartbeat.SaveHeartbeatFragment
 import com.sun.heartrate.utils.CountDownProgressBar
 import com.sun.heartrate.utils.createProgressPercent
-import com.sun.heartrate.utils.formatDate
 import com.sun.heartrate.utils.formatDecimal
 import kotlinx.android.synthetic.main.fragment_heartbeat.*
 
@@ -186,8 +185,7 @@ class HeartbeatFragment(
             onLoadFragment.nextFragment(
                 SaveHeartbeatFragment.newInstance(this,
                     numberRate,
-                    System.currentTimeMillis().formatDate()
-                
+                    System.currentTimeMillis()
                 )
             )
     }
@@ -209,7 +207,6 @@ class HeartbeatFragment(
     }
     
     companion object {
-        
         const val CODE_PERMISSION_CAMERA = 200
         const val MEASUREMENT_TIME = 26000L
         const val PERCENT_NEXT_FRAGMENT = 97
